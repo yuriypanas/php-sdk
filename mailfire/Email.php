@@ -1,5 +1,7 @@
 <?php
 
+namespace Mailfire;
+
 class MailfireEmail extends MailfireDi
 {
     const CHECK_EMAIL_RESOURCE = 'email/check';

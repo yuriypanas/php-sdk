@@ -1,5 +1,7 @@
 <?php
 
+namespace Mailfire;
+
 /**
  * Class MailfireDi
  *

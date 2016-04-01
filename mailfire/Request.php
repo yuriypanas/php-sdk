@@ -1,5 +1,7 @@
 <?php
 
+namespace Mailfire;
+
 class MailfireRequest extends MailfireDi
 {
     const API_BASE = 'https://api.mailfire.io/v1/';

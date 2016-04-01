@@ -1,5 +1,7 @@
 <?php
 
+namespace Mailfire;
+
 class MailfirePush extends MailfireDi
 {
     private $resources = [

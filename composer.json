@@ -1,0 +1,21 @@
+{
+  "name": "mailfire/php-sdk",
+  "description": "Mailfire PHP SDK",
+  "homepage": "https://mailfire.io",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Mailfire",
+      "homepage": "https://mailfire.io"
+    }
+  ],
+  "keywords": [
+    "mailfire",
+    "sdk"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Mailfire\\": "mailfire/"
+    }
+  }
+}

@@ -4,9 +4,12 @@ namespace Mailfire;
 
 class MailfirePush extends MailfireDi
 {
+    const CATEGORY_SYSTEM = 1;
+    const CATEGORY_TRIGGER = 2;
+
     private $resources = [
-        Mailfire::CATEGORY_SYSTEM => 'push/system',
-        Mailfire::CATEGORY_TRIGGER => 'push/trigger',
+        self::CATEGORY_SYSTEM => 'push/system',
+        self::CATEGORY_TRIGGER => 'push/trigger',
     ];
 
     public function send($typeId, $categoryId, $projectId, $user, $data, $meta = [])
@@ -24,5 +27,15 @@ class MailfirePush extends MailfireDi
         $resource = $this->resources[$categoryId];
 
         return $this->request->create($resource, $params);
+    }
+
+    public function getCategorySystem()
+    {
+        return self::CATEGORY_SYSTEM;
+    }
+
+    public function getCategoryTrigger()
+    {
+        return self::CATEGORY_TRIGGER;
     }
 }

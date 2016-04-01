@@ -5,8 +5,8 @@ namespace Mailfire;
 /**
  * Class MailfireDi
  *
- * @property \MailfirePush push
- * @property \MailfireRequest request
+ * @property \Mailfire\MailfirePush push
+ * @property \Mailfire\MailfireRequest request
  *
  */
 

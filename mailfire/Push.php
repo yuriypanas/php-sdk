@@ -12,9 +12,10 @@ class MailfirePush extends MailfireDi
         self::CATEGORY_TRIGGER => 'push/trigger',
     ];
 
-    public function send($typeId, $categoryId, $projectId, $user, $data, $meta = [])
+    public function send($typeId, $categoryId, $projectId, $email, $user = [], $data = [], $meta = [])
     {
         $data['user'] = $user;
+        $user['email'] =$email;
         $params = [
             'type_id' => $typeId,
             'category' => $categoryId,

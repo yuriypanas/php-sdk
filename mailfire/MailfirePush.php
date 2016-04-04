@@ -14,8 +14,8 @@ class MailfirePush extends MailfireDi
 
     public function send($typeId, $categoryId, $projectId, $email, $user = [], $data = [], $meta = [])
     {
+        $user['email'] = $email;
         $data['user'] = $user;
-        $user['email'] =$email;
         $params = [
             'type_id' => $typeId,
             'category' => $categoryId,

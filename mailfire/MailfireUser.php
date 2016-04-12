@@ -10,6 +10,28 @@ class MailfireUser extends MailfireDi
     const PLATFORM_ANDROID = 3;
     const PLATFORM_IOS = 4;
 
+    public function getByEmail($email, $projectId)
+    {
+        $result = $this->request->receive('user/email/' . $email . '/project/' . $projectId);
+        return $result['data'];
+    }
+
+    public function getById($userId)
+    {
+        $result = $this->request->receive('user/id/' . $userId);
+        return $result['data'];
+    }
+
+    public function resolve($user)
+    {
+        if (is_array($user)) {
+            return $user;
+        }
+        if (is_int($user)) {
+            return $this->getById($user);
+        }
+    }
+
     public function getPlatformUnknown()
     {
         return self::PLATFORM_UNKNOWN;

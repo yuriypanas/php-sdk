@@ -36,7 +36,19 @@ class MailfireRequest extends MailfireDi
         $sign = $this->getSign($uri, $method, $data);
         $headers[] = 'Authorization: Sign ' . $sign;
 
-        return $this->sendCurl($uri, $method, $data, $headers);
+        $result = $this->sendCurl($uri, $method, $data, $headers);
+        if ($result['code'] != 200) {
+            error_log('Mailfire: ' . $result['result']);
+            return false;
+        }
+        $result = json_decode($result['result'], true);
+        if (!$result) {
+            return false;
+        }
+        if (isset($result['data'])) {
+            return $result['data'];
+        }
+        return true;
     }
 
     private function sendCurl($uri, $method, $data, $headers)
@@ -50,12 +62,12 @@ class MailfireRequest extends MailfireDi
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         $result = curl_exec($ch);
+        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        $result = json_decode($result, true);
-        if (!$result) {
-            return false;
-        }
-        return $result;
+        return [
+            'result' => $result,
+            'code' => $code,
+        ];
     }
 
     private function getSign($uri, $method, $data)

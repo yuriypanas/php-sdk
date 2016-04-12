@@ -12,12 +12,14 @@ class MailfireUser extends MailfireDi
 
     public function getByEmail($email, $projectId)
     {
-        return $this->request->receive('user/email/' . $email . '/project/' . $projectId);
+        $result = $this->request->receive('user/project/' . $projectId . '/email/' . $email);
+        return $result ? $result['user'] : false;
     }
 
     public function getById($userId)
     {
-        return $this->request->receive('user/id/' . $userId);
+        $result = $this->request->receive('user/id/' . $userId);
+        return $result ? $result['user'] : false;
     }
 
     public function resolve($user)

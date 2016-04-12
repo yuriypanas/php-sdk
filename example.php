@@ -38,3 +38,9 @@ var_dump($response);
 // Check email
 $result = $mf->email->check('test@example.com');
 var_dump($result);
+
+// Unsubscribe
+$projectId = 1;
+$user = $mf->user->getByEmail('test@example.com', $projectId);
+$unsub = $mf->unsub->addBySettings($user);
+var_dump($unsub);

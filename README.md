@@ -1,6 +1,7 @@
 # Mailfire PHP SDK
 
 ## Install
+by composer from https://packagist.org/packages/mailfire/php-sdk
 ```sh
 composer require mailfire/php-sdk
 ```

@@ -1,7 +1,5 @@
 <?php
 
-namespace Mailfire;
-
 class MailfireUnsub extends MailfireDi
 {
     const SOURCE_FBL = 2; // Abuse

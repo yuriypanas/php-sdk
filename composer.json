@@ -13,9 +13,15 @@
     "mailfire",
     "sdk"
   ],
+  "require":{
+    "php": ">5.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.8"
+  },
   "autoload": {
     "psr-4": {
-      "Mailfire\\": "mailfire/"
+      "": "mailfire/"
     }
   }
 }

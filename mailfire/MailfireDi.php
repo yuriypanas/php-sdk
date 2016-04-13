@@ -1,13 +1,12 @@
 <?php
 
-namespace Mailfire;
-
 /**
  * Class MailfireDi
  *
- * @property \Mailfire\MailfirePush push
- * @property \Mailfire\MailfireUser user
- * @property \Mailfire\MailfireRequest request
+ * @property MailfirePush push
+ * @property MailfireUser user
+ * @property MailfireRequest request
+ * @property MailfireErrorHandler errorHandler
  *
  */
 
@@ -23,9 +22,8 @@ class MailfireDi
     public function __get($propertyName)
     {
         if (isset($this->di->{$propertyName})) {
-            $service = $this->di->{$propertyName};
-            $this->{$propertyName} = $service;
-            return $service;
+            $this->{$propertyName} = &$this->di->{$propertyName};
+            return $this->{$propertyName};
         } else {
             return null;
         }

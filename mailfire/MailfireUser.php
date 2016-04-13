@@ -1,7 +1,5 @@
 <?php
 
-namespace Mailfire;
-
 class MailfireUser extends MailfireDi
 {
     const PLATFORM_UNKNOWN = 0;

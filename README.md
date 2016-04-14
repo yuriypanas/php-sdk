@@ -15,7 +15,7 @@ require_once 'autoloader.php';
 // Init Mailfire SDK object
 $clientId = 123;
 $clientHash = 'a1s2d3f4g5h6j7k8l';
-$mf = new \Mailfire\Mailfire($clientId, $clientHash);
+$mf = new Mailfire($clientId, $clientHash);
 ```
 
 ## Send email
@@ -60,4 +60,11 @@ $projectId = 1;
 $user = $mf->user->getByEmail('test@example.com', $projectId);
 $unsub = $mf->unsub->addBySettings($user);
 var_dump($unsub);
+```
+
+## Error handling
+By default any error messages collects in error_log.
+If you want the component throws exceptions just pass 'true' to third parameter in constructor:
+```php
+$mf = new Mailfire($clientId, $clientHash, true);
 ```

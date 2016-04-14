@@ -8,16 +8,16 @@ class Mailfire
     public function __construct($clientId, $clientKey, $throwExceptions = false)
     {
         $this->errorHandler = new MailfireErrorHandler($throwExceptions);
-        if (empty($clientId)){
+        if (empty($clientId)) {
             $ex = new InvalidArgumentException('clientId cannot be empty');
             $this->errorHandler->handle($ex);
         }
-        if (empty($clientKey)){
-            $ex =  new InvalidArgumentException('clientKey cannot be empty');
+        if (empty($clientKey)) {
+            $ex = new InvalidArgumentException('clientKey cannot be empty');
             $this->errorHandler->handle($ex);
         }
-        if (!is_string($clientKey)){
-            $ex =  new InvalidArgumentException('clientKey must be a string');
+        if (!is_string($clientKey)) {
+            $ex = new InvalidArgumentException('clientKey must be a string');
             $this->errorHandler->handle($ex);
         }
 
@@ -31,5 +31,3 @@ class Mailfire
         $this->unsub = new MailfireUnsub($this);
     }
 }
-
-

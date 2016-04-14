@@ -11,20 +11,19 @@ class MailfireErrorHandler
 
     public function handle(Exception $e)
     {
-        if ($this->throwExceptions){
+        if ($this->throwExceptions) {
             throw $e;
-        } else{
+        } else {
             $template = ':time Mailfire: [:type] :message in :file in line :line';
             $logMessage = strtr($template, array(
-                ':time'    => date('Y-m-d H:i:s'),
-                ':type'    => $e->getCode(),
+                ':time' => date('Y-m-d H:i:s'),
+                ':type' => $e->getCode(),
                 ':message' => $e->getMessage(),
-                ':file'    => $e->getFile(),
-                ':line'    => $e->getLine()
+                ':file' => $e->getFile(),
+                ':line' => $e->getLine()
             ));
-            error_log($logMessage) ;
+            error_log($logMessage);
         }
     }
 }
-
 

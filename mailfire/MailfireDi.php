@@ -9,7 +9,6 @@
  * @property MailfireErrorHandler errorHandler
  *
  */
-
 class MailfireDi
 {
     public $di = null;

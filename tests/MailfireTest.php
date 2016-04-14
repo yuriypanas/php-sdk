@@ -1,4 +1,5 @@
 <?php
+
 class MailfireTest extends PHPUnit_Framework_TestCase
 {
     /**
@@ -7,7 +8,7 @@ class MailfireTest extends PHPUnit_Framework_TestCase
      */
     public function testShouldCheckClientIdEmptyValidation()
     {
-        new Mailfire('','', true);
+        new Mailfire('', '', true);
     }
 
     /**

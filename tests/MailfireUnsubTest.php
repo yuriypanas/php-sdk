@@ -1,4 +1,5 @@
 <?php
+
 class MailfireUnsubTest extends PHPUnit_Framework_TestCase
 {
     public function testShouldCheckAddByFbl()
@@ -11,7 +12,7 @@ class MailfireUnsubTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $request->expects($this->once())
             ->method('create')
-            ->with('unsub/' . $user['id'].'/source/' . MailfireUnsub::SOURCE_FBL)
+            ->with('unsub/' . $user['id'] . '/source/' . MailfireUnsub::SOURCE_FBL)
             ->will($this->returnValue($predefinedResult));
 
         $clientId = 123;
@@ -32,7 +33,7 @@ class MailfireUnsubTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $request->expects($this->once())
             ->method('create')
-            ->with('unsub/' . $user['id'].'/source/' . MailfireUnsub::SOURCE_LINK)
+            ->with('unsub/' . $user['id'] . '/source/' . MailfireUnsub::SOURCE_LINK)
             ->will($this->returnValue($predefinedResult));
 
         $clientId = 123;
@@ -53,7 +54,7 @@ class MailfireUnsubTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $request->expects($this->once())
             ->method('create')
-            ->with('unsub/' . $user['id'].'/source/' . MailfireUnsub::SOURCE_CLIENT)
+            ->with('unsub/' . $user['id'] . '/source/' . MailfireUnsub::SOURCE_CLIENT)
             ->will($this->returnValue($predefinedResult));
 
         $clientId = 123;
@@ -74,7 +75,7 @@ class MailfireUnsubTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $request->expects($this->once())
             ->method('create')
-            ->with('unsub/' . $user['id'].'/source/' . MailfireUnsub::SOURCE_SETTINGS)
+            ->with('unsub/' . $user['id'] . '/source/' . MailfireUnsub::SOURCE_SETTINGS)
             ->will($this->returnValue($predefinedResult));
 
         $clientId = 123;

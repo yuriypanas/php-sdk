@@ -1,4 +1,5 @@
 <?php
+
 class MailfireUserTest extends PHPUnit_Framework_TestCase
 {
     public function testShouldCheckGetByEmail()
@@ -12,7 +13,7 @@ class MailfireUserTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $request->expects($this->once())
             ->method('receive')
-            ->with('user/project/' . $projectId.'/email/' . $email)
+            ->with('user/project/' . $projectId . '/email/' . $email)
             ->will($this->returnValue($predefinedResult));
 
         $clientId = 123;

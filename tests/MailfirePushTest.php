@@ -1,4 +1,5 @@
 <?php
+
 class MailfirePushTest extends PHPUnit_Framework_TestCase
 {
     public function testShouldCheckSend()
@@ -36,7 +37,7 @@ class MailfirePushTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($predefinedResult));
 
         $mf->request = $request;
-        $result = $mf->push->send($params['type_id'], $params['category'], $params['project_id'], $data['user']['email'], array('email'=>'') , $data, $meta);
+        $result = $mf->push->send($params['type_id'], $params['category'], $params['project_id'], $data['user']['email'], array('email' => ''), $data, $meta);
         $this->assertEquals($predefinedResult, $result);
     }
 

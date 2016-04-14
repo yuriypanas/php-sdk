@@ -50,13 +50,13 @@ class MailfireRequest extends MailfireDi
         $result = $this->sendCurl($uri, $method, $data, $headers);
         if ($result['code'] != 200) {
             $debugData = array(
-                'uri'=>$uri,
-                'method'=>$method,
-                'data'=>$data,
-                'headers'=>$headers
+                'uri' => $uri,
+                'method' => $method,
+                'data' => $data,
+                'headers' => $headers
             );
             $exception = new Exception('Request failed: ' . json_encode($result) .
-                ' Request data: '. json_encode($debugData));
+                ' Request data: ' . json_encode($debugData));
             $this->errorHandler->handle($exception);
             return false;
         }

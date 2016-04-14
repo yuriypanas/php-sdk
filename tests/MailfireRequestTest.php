@@ -76,7 +76,7 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
         );
         $mf = new Mailfire($clientId, $clientKey, true);
         $mf->request->setCurlRequest($curl);
-        $response = $mf->request->create('test',$data);
+        $response = $mf->request->create('test', $data);
         $this->assertTrue($response);
     }
 
@@ -129,7 +129,7 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
         );
         $mf = new Mailfire($clientId, $clientKey, true);
         $mf->request->setCurlRequest($curl);
-        $response = $mf->request->update('test/42',$data);
+        $response = $mf->request->update('test/42', $data);
         $this->assertTrue($response);
     }
 
@@ -242,4 +242,3 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
         return $method->invokeArgs($object, $parameters);
     }
 }
-

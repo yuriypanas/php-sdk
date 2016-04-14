@@ -18,7 +18,8 @@ class MailfirePushTest extends PHPUnit_Framework_TestCase
         );
         $meta = array(); // Your additional data
 
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $params = array(
             'type_id' => 1,
             'category' => $mf->push->getCategorySystem(),

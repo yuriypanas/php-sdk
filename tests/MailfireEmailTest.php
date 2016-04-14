@@ -18,7 +18,8 @@ class MailfireEmailTest extends PHPUnit_Framework_TestCase
 
         $clientId = 123;
         $clientKey = 'a1s2d3f4g5h6j7k8l';
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request = $request;
         $result = $mf->email->check($email);
         $this->assertEquals($predefinedResult, $result);

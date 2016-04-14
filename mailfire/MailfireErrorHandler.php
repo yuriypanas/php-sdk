@@ -2,16 +2,19 @@
 
 class MailfireErrorHandler
 {
-    private $throwExceptions;
+    const MODE_ERROR = 1;
+    const MODE_EXCEPTION = 2;
+    
+    private $mode;
 
-    public function __construct($throwExceptions = false)
+    public function __construct($mode = self::MODE_ERROR)
     {
-        $this->throwExceptions = $throwExceptions;
+        $this->setErrorMode($mode);
     }
 
     public function handle(Exception $e)
     {
-        if ($this->throwExceptions) {
+        if ($this->mode === self::MODE_EXCEPTION) {
             throw $e;
         } else {
             $template = ':time Mailfire: [:type] :message in :file in line :line';
@@ -24,6 +27,11 @@ class MailfireErrorHandler
             ));
             error_log($logMessage);
         }
+    }
+
+    public function setErrorMode($mode)
+    {
+        $this->mode = $mode;
     }
 }
 

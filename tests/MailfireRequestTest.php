@@ -15,7 +15,8 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
 
         $clientId = 123;
         $clientKey = 'a1s2d3f4g5h6j7k8l';
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request->setCurlRequest($curl);
         $data = $mf->request->receive('test/get');
         $this->assertEquals($responseData, $data);
@@ -32,7 +33,8 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue(404));
         $clientId = 123;
         $clientKey = 'a1s2d3f4g5h6j7k8l';
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request->setCurlRequest($curl);
         $data = $mf->request->receive('test/get');
         $this->assertFalse($data);
@@ -49,7 +51,8 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue(200));
         $clientId = 123;
         $clientKey = 'a1s2d3f4g5h6j7k8l';
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request->setCurlRequest($curl);
         $data = $mf->request->receive('test/get');
         $this->assertTrue($data);
@@ -74,7 +77,8 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
                 'key' => 'value'
             )
         );
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request->setCurlRequest($curl);
         $response = $mf->request->create('test', $data);
         $this->assertTrue($response);
@@ -102,7 +106,8 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
                 'key' => 'value'
             )
         );
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request->setCurlRequest($curl);
         $response = $mf->request->create('test', $data);
         $this->assertFalse($response);
@@ -127,7 +132,8 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
                 'key' => 'value'
             )
         );
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request->setCurlRequest($curl);
         $response = $mf->request->update('test/42', $data);
         $this->assertTrue($response);
@@ -155,7 +161,8 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
                 'key' => 'value'
             )
         );
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request->setCurlRequest($curl);
         $response = $mf->request->update('test/42', $data);
         $this->assertFalse($response);
@@ -174,6 +181,7 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
         $clientKey = 'a1s2d3f4g5h6j7k8l';
 
         $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request->setCurlRequest($curl);
         $response = $mf->request->delete('test/42');
         $this->assertTrue($response);
@@ -194,7 +202,8 @@ class MailfireRequestTest extends PHPUnit_Framework_TestCase
         $clientId = 123;
         $clientKey = 'a1s2d3f4g5h6j7k8l';
 
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request->setCurlRequest($curl);
         $response = $mf->request->delete('test/42');
         $this->assertFalse($response);

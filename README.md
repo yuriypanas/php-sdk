@@ -63,8 +63,17 @@ var_dump($unsub);
 ```
 
 ## Error handling
-By default any error messages collects in error_log.
-If you want the component throws exceptions just pass 'true' to third parameter in constructor:
+By default any error messages (except InvalidArgumentException in Mailfire constructor) collects in error_log.
+If you want the component throws exceptions just change handler mode:
 ```php
-$mf = new Mailfire($clientId, $clientHash, true);
+$mf = new Mailfire($clientId, $clientHash);
+$mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
+```
+
+# HOW TO RUN THE TESTS
+Make sure you have PHPUnit installed.
+
+Run PHPUnit in the mailfire repo base directory.
+```bash
+php vendor/bin/phpunit --bootstrap tests/bootstrap.php tests
 ```

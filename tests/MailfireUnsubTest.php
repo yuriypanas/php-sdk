@@ -17,7 +17,8 @@ class MailfireUnsubTest extends PHPUnit_Framework_TestCase
 
         $clientId = 123;
         $clientKey = 'a1s2d3f4g5h6j7k8l';
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request = $request;
         $result = $mf->unsub->addByFbl($user);
         $this->assertEquals($predefinedResult, $result);
@@ -38,7 +39,8 @@ class MailfireUnsubTest extends PHPUnit_Framework_TestCase
 
         $clientId = 123;
         $clientKey = 'a1s2d3f4g5h6j7k8l';
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request = $request;
         $result = $mf->unsub->addByLink($user);
         $this->assertEquals($predefinedResult, $result);
@@ -59,7 +61,8 @@ class MailfireUnsubTest extends PHPUnit_Framework_TestCase
 
         $clientId = 123;
         $clientKey = 'a1s2d3f4g5h6j7k8l';
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request = $request;
         $result = $mf->unsub->addByClient($user);
         $this->assertEquals($predefinedResult, $result);
@@ -80,7 +83,8 @@ class MailfireUnsubTest extends PHPUnit_Framework_TestCase
 
         $clientId = 123;
         $clientKey = 'a1s2d3f4g5h6j7k8l';
-        $mf = new Mailfire($clientId, $clientKey, true);
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request = $request;
         $result = $mf->unsub->addBySettings($user);
         $this->assertEquals($predefinedResult, $result);

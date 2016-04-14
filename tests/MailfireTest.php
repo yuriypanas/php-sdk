@@ -32,6 +32,7 @@ class MailfireTest extends PHPUnit_Framework_TestCase
     public function testShouldCheckPropertyTypes()
     {
         $mf = new Mailfire(123, 'some key');
+        $this->assertInstanceOf('MailfireErrorHandler', $mf->errorHandler);
         $this->assertInstanceOf('MailfireRequest', $mf->request);
         $this->assertInstanceOf('MailfirePush', $mf->push);
         $this->assertInstanceOf('MailfireEmail', $mf->email);

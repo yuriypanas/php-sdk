@@ -1,9 +1,0 @@
-app52:
-    image: tlovett1/php-5.2-phpunit-3.5
-    volumes:
-        - .:/var/www/html
-    command: "/bin/bash"
-app53:
-    image: greensheep/dockerfiles-php-5.3
-    volumes_from:
-        - app52

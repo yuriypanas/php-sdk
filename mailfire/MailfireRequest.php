@@ -1,22 +1,33 @@
 <?php
 
-namespace Mailfire;
-
 class MailfireRequest extends MailfireDi
 {
     const API_BASE = 'https://api.mailfire.io/v1/';
 
-    public function receive($resource, $data = [])
+    private $curlRequest = null;
+
+    public function __construct($di)
+    {
+        parent::__construct($di);
+        $this->setCurlRequest(new MailfireCurlRequest());
+    }
+
+    public function setCurlRequest(MailfireCurlRequest $curlRequest)
+    {
+        $this->curlRequest = $curlRequest;
+    }
+
+    public function receive($resource, array $data = array())
     {
         return $this->send($resource, 'GET', $data);
     }
 
-    public function create($resource, $data = [])
+    public function create($resource, array $data = array())
     {
         return $this->send($resource, 'POST', $data);
     }
 
-    public function update($resource, $data)
+    public function update($resource, array $data)
     {
         return $this->send($resource, 'PUT', $data);
     }
@@ -26,19 +37,27 @@ class MailfireRequest extends MailfireDi
         return $this->send($resource, 'DELETE');
     }
 
-    private function send($resource, $method, $data = [])
+    private function send($resource, $method, $data = array())
     {
         $resource = strtolower($resource);
         $method = strtoupper($method);
         $uri = self::API_BASE . $resource;
 
-        $headers = [];
+        $headers = array();
         $sign = $this->getSign($uri, $method, $data);
         $headers[] = 'Authorization: Sign ' . $sign;
 
         $result = $this->sendCurl($uri, $method, $data, $headers);
         if ($result['code'] != 200) {
-            error_log('Mailfire: ' . $result['result']);
+            $debugData = array(
+                'uri' => $uri,
+                'method' => $method,
+                'data' => $data,
+                'headers' => $headers
+            );
+            $exception = new Exception('Request failed: ' . json_encode($result) .
+                ' Request data: ' . json_encode($debugData));
+            $this->errorHandler->handle($exception);
             return false;
         }
         $result = json_decode($result['result'], true);
@@ -53,21 +72,21 @@ class MailfireRequest extends MailfireDi
 
     private function sendCurl($uri, $method, $data, $headers)
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $uri);
+        $this->curlRequest->setOption(CURLOPT_URL, $uri);
         if (count($data)) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            $this->curlRequest->setOption(CURLOPT_POSTFIELDS, json_encode($data));
         }
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-        $result = curl_exec($ch);
-        $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-        return [
+        $this->curlRequest->setOption(CURLOPT_HTTPHEADER, $headers);
+        $this->curlRequest->setOption(CURLOPT_RETURNTRANSFER, 1);
+        $this->curlRequest->setOption(CURLOPT_CUSTOMREQUEST, $method);
+        $result = $this->curlRequest->execute();
+        $code = $this->curlRequest->getInfo(CURLINFO_HTTP_CODE);
+        $this->curlRequest->close();
+
+        return array(
             'result' => $result,
-            'code' => $code,
-        ];
+            'code' => $code
+        );
     }
 
     private function getSign($uri, $method, $data)
@@ -75,9 +94,17 @@ class MailfireRequest extends MailfireDi
         $data['request_method'] = $method;
         $data['request_uri'] = $uri;
         ksort($data);
-        $sign = hash_hmac('sha256', json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), $this->clientKey);
+        //There is no JSON_UNESCAPED_SLASHES and JSON_UNESCAPED_UNICODE in php5.3
+        $encoded = json_encode($data);
+        //simulate JSON_UNESCAPED_UNICODE
+        $unescaped = preg_replace_callback('/(?<!\\\\)\\\\u(\w{4})/', function ($matches) {
+            return html_entity_decode('&#x' . $matches[1] . ';', ENT_COMPAT, 'UTF-8');
+        }, $encoded);
+        //simulate JSON_UNESCAPED_SLASHES
+        $unescaped = str_replace('\\/', '/', $unescaped);
+        $sign = hash_hmac('sha256', $unescaped, $this->clientKey);
 
-        $signData = json_encode(['client_id' => $this->clientId, 'sign' => $sign]);
+        $signData = json_encode(array('client_id' => $this->clientId, 'sign' => $sign));
         return base64_encode($signData);
     }
 }

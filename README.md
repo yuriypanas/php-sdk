@@ -15,7 +15,7 @@ require_once 'autoloader.php';
 // Init Mailfire SDK object
 $clientId = 123;
 $clientHash = 'a1s2d3f4g5h6j7k8l';
-$mf = new \Mailfire\Mailfire($clientId, $clientHash);
+$mf = new Mailfire($clientId, $clientHash);
 ```
 
 ## Send email
@@ -60,4 +60,20 @@ $projectId = 1;
 $user = $mf->user->getByEmail('test@example.com', $projectId);
 $unsub = $mf->unsub->addBySettings($user);
 var_dump($unsub);
+```
+
+## Error handling
+By default any error messages (except InvalidArgumentException in Mailfire constructor) collects in error_log.
+If you want the component throws exceptions just change handler mode:
+```php
+$mf = new Mailfire($clientId, $clientHash);
+$mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
+```
+
+# HOW TO RUN THE TESTS
+Make sure you have PHPUnit installed.
+
+Run PHPUnit in the mailfire repo base directory.
+```bash
+php vendor/bin/phpunit --bootstrap tests/bootstrap.php tests
 ```

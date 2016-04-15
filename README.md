@@ -75,5 +75,5 @@ Make sure you have PHPUnit installed.
 
 Run PHPUnit in the mailfire repo base directory.
 ```bash
-php vendor/bin/phpunit --bootstrap tests/bootstrap.php tests
+./test.sh
 ```

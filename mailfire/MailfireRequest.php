@@ -81,7 +81,6 @@ class MailfireRequest extends MailfireDi
         $this->curlRequest->setOption(CURLOPT_CUSTOMREQUEST, $method);
         $result = $this->curlRequest->execute();
         $code = $this->curlRequest->getInfo(CURLINFO_HTTP_CODE);
-        $this->curlRequest->close();
 
         return array(
             'result' => $result,

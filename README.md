@@ -1,5 +1,10 @@
 # Mailfire PHP SDK
 
+[![Latest Stable Version](https://poser.pugx.org/mailfire/php-sdk/v/stable)](https://packagist.org/packages/mailfire/php-sdk)
+[![Total Downloads](https://poser.pugx.org/mailfire/php-sdk/downloads)](https://packagist.org/packages/mailfire/php-sdk)
+
+PHP SDK for https://mailfire.io
+
 ## Install
 by composer from https://packagist.org/packages/mailfire/php-sdk
 ```sh

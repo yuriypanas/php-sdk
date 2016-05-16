@@ -93,14 +93,27 @@ class MailfireRequest extends MailfireDi
         $data['request_method'] = $method;
         $data['request_uri'] = $uri;
         ksort($data);
+
         //There is no JSON_UNESCAPED_SLASHES and JSON_UNESCAPED_UNICODE in php5.3
         $encoded = json_encode($data);
+
         //simulate JSON_UNESCAPED_UNICODE
-        $unescaped = preg_replace_callback('/(?<!\\\\)\\\\u(\w{4})/', function ($matches) {
-            return html_entity_decode('&#x' . $matches[1] . ';', ENT_COMPAT, 'UTF-8');
-        }, $encoded);
+        $unescaped = preg_replace_callback(
+            '/(?<!\\\\)\\\\u(\w{4})/i',
+            function ($matches) {
+                $sym = mb_convert_encoding(
+                    pack('H*', $matches[1]),
+                    'UTF-8',
+                    'UTF-16'
+                );
+                return $sym;
+            },
+            $encoded
+        );
+
         //simulate JSON_UNESCAPED_SLASHES
         $unescaped = str_replace('\\/', '/', $unescaped);
+
         $sign = hash_hmac('sha256', $unescaped, $this->clientKey);
 
         $signData = json_encode(array('client_id' => $this->clientId, 'sign' => $sign));

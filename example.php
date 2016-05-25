@@ -4,7 +4,7 @@ require_once 'autoloader.php';
 // Init Mailfire SDK object
 $clientId = 123;
 $clientHash = 'a1s2d3f4g5h6j7k8l';
-$mf = new \Mailfire\Mailfire($clientId, $clientHash);
+$mf = new Mailfire($clientId, $clientHash);
 
 
 // Send email

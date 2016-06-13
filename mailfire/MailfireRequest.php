@@ -2,7 +2,7 @@
 
 class MailfireRequest extends MailfireDi
 {
-    const API_BASE = 'http://api.mailfier.dev/v1/';
+    const API_BASE = 'https://api.mailfire.io/v1/';
 
     private $curlRequest = null;
 

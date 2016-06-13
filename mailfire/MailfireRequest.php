@@ -45,6 +45,9 @@ class MailfireRequest extends MailfireDi
 
         $headers = array();
         $sign = $this->getSign($uri, $method, $data);
+        if (false === $sign) {
+            return false;
+        }
         $headers[] = 'Authorization: Sign ' . $sign;
 
         $result = $this->sendCurl($uri, $method, $data, $headers);
@@ -97,6 +100,11 @@ class MailfireRequest extends MailfireDi
         if (PHP_VERSION_ID >= 50400) {
             $unescaped = json_encode($data, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         } else {
+            if (!function_exists('mb_convert_encoding')) {
+                $exception = new Exception('Ext mbstring is required on php < 5.4');
+                $this->errorHandler->handle($exception);
+                return false;
+            }
             //There is no JSON_UNESCAPED_SLASHES and JSON_UNESCAPED_UNICODE in php5.3
             $encoded = json_encode($data);
 

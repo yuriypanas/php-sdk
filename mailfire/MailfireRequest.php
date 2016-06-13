@@ -6,37 +6,70 @@ class MailfireRequest extends MailfireDi
 
     private $curlRequest = null;
 
+    /**
+     * MailfireRequest constructor.
+     * @param $di
+     */
     public function __construct($di)
     {
         parent::__construct($di);
         $this->setCurlRequest(new MailfireCurlRequest());
     }
 
+    /**
+     * @param MailfireCurlRequest $curlRequest
+     */
     public function setCurlRequest(MailfireCurlRequest $curlRequest)
     {
         $this->curlRequest = $curlRequest;
     }
 
+    /**
+     * @param $resource
+     * @param array $data
+     * @return bool
+     */
     public function receive($resource, array $data = array())
     {
         return $this->send($resource, 'GET', $data);
     }
 
+    /**
+     * @param $resource
+     * @param array $data
+     * @return bool
+     */
     public function create($resource, array $data = array())
     {
         return $this->send($resource, 'POST', $data);
     }
 
+    /**
+     * @param $resource
+     * @param array $data
+     * @return bool
+     */
     public function update($resource, array $data)
     {
         return $this->send($resource, 'PUT', $data);
     }
 
+    /**
+     * @param $resource
+     * @return bool
+     */
     public function delete($resource)
     {
         return $this->send($resource, 'DELETE');
     }
 
+    /**
+     * @param string $resource
+     * @param string $method
+     * @param array $data
+     * @return bool
+     * @throws Exception
+     */
     private function send($resource, $method, $data = array())
     {
         $resource = strtolower($resource);
@@ -73,6 +106,13 @@ class MailfireRequest extends MailfireDi
         return true;
     }
 
+    /**
+     * @param $uri
+     * @param $method
+     * @param $data
+     * @param $headers
+     * @return array
+     */
     private function sendCurl($uri, $method, $data, $headers)
     {
         $this->curlRequest->setOption(CURLOPT_URL, $uri);
@@ -91,6 +131,12 @@ class MailfireRequest extends MailfireDi
         );
     }
 
+    /**
+     * @param $uri
+     * @param $method
+     * @param $data
+     * @return string
+     */
     private function getSign($uri, $method, $data)
     {
         $data['request_method'] = $method;
@@ -100,6 +146,7 @@ class MailfireRequest extends MailfireDi
         if (PHP_VERSION_ID >= 50400) {
             $unescaped = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         } else {
+            //There is no JSON_UNESCAPED_SLASHES and JSON_UNESCAPED_UNICODE in php5.3
             $unescaped = $this->jsonEncodeUnescapedUnicode($data);
             //simulate JSON_UNESCAPED_SLASHES
             $unescaped = str_replace('\\/', '/', $unescaped);
@@ -111,6 +158,12 @@ class MailfireRequest extends MailfireDi
         return base64_encode($signData);
     }
 
+    /**
+     * Emulate JSON_UNESCAPED_UNICODE
+     * @param $arr
+     * @return bool|string
+     * @throws Exception
+     */
     private function jsonEncodeUnescapedUnicode($arr)
     {
         if (!function_exists('mb_encode_numericentity')) {

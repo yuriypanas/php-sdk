@@ -55,8 +55,16 @@ var_dump($response);
 
 ## Check email
 ```php
-$result = $mf->email->check('test@example.com');
-var_dump($result);
+$result = $mf->email->check('Test@Example.com');
+/* Returned array(
+  'orig' => 'Test@Example.com',
+  'valid' => false, // result
+  'reason' => 'mx_record', // reason of result
+  'email' => 'test@example.com', // fixed email
+  'vendor' => 'Unknown', // vendor name like Gmail
+  'domain' => 'example.com',
+  'trusted' => false,
+) */
 ```
 
 ## Unsubscribe

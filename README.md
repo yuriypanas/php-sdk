@@ -67,6 +67,27 @@ $result = $mf->email->check('Test@Example.com');
 ) */
 ```
 
+## User info
+```php
+$projectId = 1;
+$user = $mf->user->getByEmail('Test@Example.com', $projectId);
+/* Returned array(
+    "id":8424,
+    "project_id":1,
+    "email":"test@example.com",
+    "name":"John",
+    "gender":"m",
+    "country":"UKR",
+    "language":"en",
+    "last_online":"2016-06-17 12:59:19",
+    "last_reaction":"2016-06-17 12:59:19",
+    "last_mailed":"2016-06-22 12:06:45",
+    "last_request":"2016-06-03 04:01:19",
+    "activation":"2016-01-30 11:28:24",
+    ...
+) */
+```
+
 ## Unsubscribe
 ```php
 $projectId = 1;

@@ -13,7 +13,8 @@ class MailfireWebPush extends MailfireDi
             return false;
         }
 
-        return $this->request->create('webpush/unsubscribe/' . $pushUser['id']);
+        $result = $this->request->create('webpush/unsubscribe/' . $pushUser['id']);
+        return !empty($result['result']) ? $result['result'] : false;
     }
 
     /**
@@ -28,7 +29,8 @@ class MailfireWebPush extends MailfireDi
             return false;
         }
 
-        return $this->request->create('webpush/unsubscribe/' . $pushUser['id']);
+        $result = $this->request->create('webpush/unsubscribe/' . $pushUser['id']);
+        return !empty($result['result']) ? $result['result'] : false;
     }
 
     /**
@@ -42,7 +44,8 @@ class MailfireWebPush extends MailfireDi
             return false;
         }
 
-        return $this->request->delete('webpush/subscribe/' . $pushUser['id']);
+        $result = $this->request->delete('webpush/subscribe/' . $pushUser['id']);
+        return !empty($result['result']) ? $result['result'] : false;
     }
 
 
@@ -53,7 +56,8 @@ class MailfireWebPush extends MailfireDi
             return false;
         }
 
-        return $this->request->delete('webpush/subscribe/' . $pushUser['id']);
+        $result = $this->request->delete('webpush/subscribe/' . $pushUser['id']);
+        return !empty($result['result']) ? $result['result'] : false;
     }
 
     /**
@@ -70,7 +74,8 @@ class MailfireWebPush extends MailfireDi
             return false;
         }
 
-        return $this->request->receive('webpush/user/get/' . $user['id']);
+        $result = $this->request->receive('webpush/user/get/' . $user['id']);
+        return !empty($result['result']) ? $result['result'] : false;
     }
 
     /**
@@ -80,6 +85,7 @@ class MailfireWebPush extends MailfireDi
      */
     protected function getPushUserByProjectIdAndHash($projectId, $hash)
     {
-        return $this->request->receive('webpush/user/get/' . $projectId . '/hash/' . $hash);
+        $result = $this->request->receive('webpush/project/get/' . $projectId . '/hash/' . $hash);
+        return !empty($result['result']) ? $result['result'] : false;
     }
 }

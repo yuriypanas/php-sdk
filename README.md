@@ -96,6 +96,29 @@ $unsub = $mf->unsub->addBySettings($user);
 var_dump($unsub);
 ```
 
+## Send push notification
+```php
+//select user
+$user = $mf->user->getByEmail('someone@example.com', 2);
+//webpush data
+$title = 'Webpush title';
+$url = 'https://myproject.com/show/42';
+$iconUrl = 'https://static.myproject.com/6hgf5ewwfoj6';
+$typeId = 6;
+//send
+$mf->webpush->sendByUser($user, $title, $url, $iconUrl, $typeId);
+```
+
+## Unsubscribe/Subscribe user for push notifications
+```php
+//select user
+$user = $mf->user->getByEmail('someone@example.com', 2);
+//unsubscribe
+$mf->webpush->unsubscribeByUser($user);
+//subscribe back
+$mf->webpush->subscribeByUser($user);
+```
+
 ## Error handling
 By default any error messages (except InvalidArgumentException in Mailfire constructor) collects in error_log.
 If you want the component throws exceptions just change handler mode:

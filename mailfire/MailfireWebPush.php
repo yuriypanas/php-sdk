@@ -62,12 +62,73 @@ class MailfireWebPush extends MailfireDi
 
     /**
      * @param array|int $user
+     * @param string $title
+     * @param string $url
+     * @param string $iconUrl
+     * @param int $typeId
+     * @param array $meta
+     * @return bool
+     */
+    public function sendByUser($user, $title, $url, $iconUrl, $typeId, $meta = [])
+    {
+        $pushUser = $this->getPushUserByUser($user);
+        if (!$pushUser || !$pushUser['id']) {
+            $this->errorHandler->handle(new Exception('PushUser was not found'));
+            return false;
+        }
+
+        $webpushMessage = [
+            'push_user_id' => $pushUser['id'],
+            'title' => $title,
+            'url' => $url,
+            'icon' => $iconUrl,
+            'type_id' => $typeId,
+            'meta' => $meta,
+        ];
+
+        $result = $this->request->create('webpush/send', $webpushMessage);
+        return !empty($result['result']) ? $result['result'] : false;
+    }
+
+    /**
+     * @param $projectId
+     * @param $hash
+     * @param string $title
+     * @param string $url
+     * @param string $iconUrl
+     * @param int $typeId
+     * @param array $meta
+     * @param array $webpushMessage
+     */
+    public function sendByProjectIdAndHash($projectId, $hash,  $title, $url, $iconUrl, $typeId, $meta = [])
+    {
+        $pushUser = $this->getPushUserByProjectIdAndHash($projectId, $hash);
+        if (!$pushUser || !$pushUser['id']) {
+            $this->errorHandler->handle(new Exception('PushUser was not found'));
+            return false;
+        }
+
+        $webpushMessage = [
+            'push_user_id' => $pushUser['id'],
+            'title' => $title,
+            'url' => $url,
+            'icon' => $iconUrl,
+            'type_id' => $typeId,
+            'meta' => $meta,
+        ];
+
+        $result = $this->request->create('webpush/send', $webpushMessage);
+        return !empty($result['result']) ? $result['result'] : false;
+    }
+
+    /**
+     * @param array|int $user
      * @return bool
      */
     protected function getPushUserByUser($user)
     {
         if (is_int($user)) {
-            $user['id'] = $user;
+            $user = ['id' => $user];
         }
 
         if (!$user || !isset($user['id']) || !$user['id']) {

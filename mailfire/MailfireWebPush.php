@@ -61,17 +61,15 @@ class MailfireWebPush extends MailfireDi
     }
 
     /**
-     * array['title']   string (required) Webpush title
-     *      ['url']     string (required) Webpush link url
-     *      ['icon']    string (required) Webpush icon image url
-     *      ['type_id'] int (required) Webpush type ID
-     *      ['meta']    array (optional) Webpush meta
-     *
      * @param array|int $user
-     * @param array $webpushMessage (See above)
+     * @param string $title
+     * @param string $url
+     * @param string $iconUrl
+     * @param int $typeId
+     * @param array $meta
      * @return bool
      */
-    public function sendByUser($user, array $webpushMessage)
+    public function sendByUser($user, $title, $url, $iconUrl, $typeId, $meta = [])
     {
         $pushUser = $this->getPushUserByUser($user);
         if (!$pushUser || !$pushUser['id']) {
@@ -79,24 +77,30 @@ class MailfireWebPush extends MailfireDi
             return false;
         }
 
-        $webpushMessage['push_user_id'] = $pushUser['id'];
+        $webpushMessage = [
+            'push_user_id' => $pushUser['id'],
+            'title' => $title,
+            'url' => $url,
+            'icon' => $iconUrl,
+            'type_id' => $typeId,
+            'meta' => $meta,
+        ];
 
         $result = $this->request->create('webpush/send', $webpushMessage);
         return !empty($result['result']) ? $result['result'] : false;
     }
 
     /**
-     * array['title']   string (required) Webpush title
-     *      ['url']     string (required) Webpush link url
-     *      ['icon']    string (required) Webpush icon image url
-     *      ['type_id'] int (required) Webpush type ID
-     *      ['meta']    array (optional) Webpush meta
-     *
      * @param $projectId
      * @param $hash
+     * @param string $title
+     * @param string $url
+     * @param string $iconUrl
+     * @param int $typeId
+     * @param array $meta
      * @param array $webpushMessage
      */
-    public function sendByProjectIdAndHash($projectId, $hash, array $webpushMessage)
+    public function sendByProjectIdAndHash($projectId, $hash,  $title, $url, $iconUrl, $typeId, $meta = [])
     {
         $pushUser = $this->getPushUserByProjectIdAndHash($projectId, $hash);
         if (!$pushUser || !$pushUser['id']) {
@@ -104,7 +108,14 @@ class MailfireWebPush extends MailfireDi
             return false;
         }
 
-        $webpushMessage['push_user_id'] = $pushUser['id'];
+        $webpushMessage = [
+            'push_user_id' => $pushUser['id'],
+            'title' => $title,
+            'url' => $url,
+            'icon' => $iconUrl,
+            'type_id' => $typeId,
+            'meta' => $meta,
+        ];
 
         $result = $this->request->create('webpush/send', $webpushMessage);
         return !empty($result['result']) ? $result['result'] : false;

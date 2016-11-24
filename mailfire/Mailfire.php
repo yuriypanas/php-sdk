@@ -26,6 +26,7 @@ class Mailfire
         $this->email = new MailfireEmail($this);
         $this->user = new MailfireUser($this);
         $this->unsub = new MailfireUnsub($this);
+        $this->unsubTypes = new MailfireUnsubTypes($this);
         $this->webpush = new MailfireWebPush($this);
     }
     

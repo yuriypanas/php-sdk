@@ -23,7 +23,7 @@ class MailfireUnsubTypes extends MailfireDi
      * @param array|int $user
      * @param array $typeIds
      */
-    public function setEnabledTypes($user, array $typeIds)
+    public function setDisabledTypes($user, array $typeIds)
     {
         if (is_int($user)) {
             $user = ['id' => $user];
@@ -33,7 +33,7 @@ class MailfireUnsubTypes extends MailfireDi
             return false;
         }
 
-        return $this->request->update('unsubtypes/'. $user['id'], ['type_ids' => $typeIds]);
+        return $this->request->create('unsubtypes/'. $user['id'], ['type_ids' => $typeIds]);
     }
 
 }

@@ -96,6 +96,38 @@ $unsub = $mf->unsub->addBySettings($user);
 var_dump($unsub);
 ```
 
+## Unsubscribe from types
+```php
+$projectId = 1;
+$user = $mf->user->getByEmail('test@example.com', $projectId);
+$list = $mf->unsubTypes->getList($user);
+var_dump($list);
+//array(2) {
+//  [0] =>
+//  array(3) {
+//    'type_id' =>
+//   int(3)
+//    'unsubscribed' =>
+//    bool(false)
+//    'name' =>
+//    string(11) "Popular now"
+//  }
+//  [1] =>
+//  array(3) {
+//    'type_id' =>
+//    int(4)
+//    'unsubscribed' =>
+//    bool(false)
+//    'name' =>
+//    string(8) "Breaking"
+//  }
+//}
+
+$result = $mf->unsubTypes->setDisabledTypes(12, [4]); //subscribes
+//f or all active type_id`s except 4
+
+```
+
 ## Send push notification
 ```php
 //select user

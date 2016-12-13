@@ -29,4 +29,9 @@ class MailfireCurlRequest
         curl_close($this->handle);
     }
 
+    public function reset()
+    {
+        curl_reset($this->handle);
+    }
+
 }

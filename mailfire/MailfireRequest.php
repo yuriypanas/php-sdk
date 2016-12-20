@@ -56,11 +56,12 @@ class MailfireRequest extends MailfireDi
 
     /**
      * @param $resource
+     * @param array $data
      * @return bool
      */
-    public function delete($resource)
+    public function delete($resource, $data = array())
     {
-        return $this->send($resource, 'DELETE');
+        return $this->send($resource, 'DELETE', $data);
     }
 
     /**

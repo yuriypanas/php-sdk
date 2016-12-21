@@ -124,7 +124,11 @@ var_dump($list);
 //}
 
 $result = $mf->unsubTypes->setDisabledTypes(12, [4]); //subscribes
-//f or all active type_id`s except 4
+//for all active type_id`s except 4
+
+$mf->unsubTypes->addTypes(12, [4]); //unsubscribe user from type 4
+$mf->unsubTypes->removeTypes(12, [4]); //subscribe user for type 4
+$mf->unsubTypes->removeAll(12); //subscribe user for all types
 
 ```
 

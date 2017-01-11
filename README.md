@@ -49,12 +49,14 @@ $data = [ // Data for letter
 
 $meta = []; // Your additional data
 
+// Make POST to /push/system or /push/trigger with json http://pastebin.com/raw/Dy3VeZpB
 $response = $mf->push->send($typeId, $categoryId, $projectId, $email, $user, $data, $meta);
 var_dump($response);
 ```
 
 ## Check email
 ```php
+// Make POST /email/check with json {"email":"Test@Example.com"}
 $result = $mf->email->check('Test@Example.com');
 /* Returned array(
   'orig' => 'Test@Example.com',
@@ -70,6 +72,7 @@ $result = $mf->email->check('Test@Example.com');
 ## User info
 ```php
 $projectId = 1;
+// Make GET to /user/project/PROJECT_ID/email/Test@Example.com
 $user = $mf->user->getByEmail('Test@Example.com', $projectId);
 /* Returned array(
     "id":8424,
@@ -92,6 +95,7 @@ $user = $mf->user->getByEmail('Test@Example.com', $projectId);
 ```php
 $projectId = 1;
 $user = $mf->user->getByEmail('test@example.com', $projectId);
+// Make POST to /unsub/USER_ID/source/9
 $unsub = $mf->unsub->addBySettings($user);
 var_dump($unsub);
 ```

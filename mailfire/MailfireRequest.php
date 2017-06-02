@@ -5,6 +5,7 @@ class MailfireRequest extends MailfireDi
     const API_BASE = 'https://api.mailfire.io/v1/';
 
     private $curlRequest = null;
+    private $lastCurlResult = null;
 
     /**
      * MailfireRequest constructor.
@@ -85,6 +86,7 @@ class MailfireRequest extends MailfireDi
         $headers[] = 'Authorization: Sign ' . $sign;
 
         $result = $this->sendCurl($uri, $method, $data, $headers);
+        $this->lastCurlResult = $result;
         if ($result['code'] != 200) {
             $debugData = array(
                 'uri' => $uri,
@@ -176,9 +178,16 @@ class MailfireRequest extends MailfireDi
         }
         //convmap since 0x80 char codes so it takes all multibyte codes (above ASCII 127). So such characters are being "hidden" from normal json_encoding
         array_walk_recursive($arr, function (&$item, $key) {
-            if (is_string($item)) $item = mb_encode_numericentity($item, array(0x80, 0xffff, 0, 0xffff), 'UTF-8');
+            if (is_string($item)) {
+                $item = mb_encode_numericentity($item, array(0x80, 0xffff, 0, 0xffff), 'UTF-8');
+            }
         });
         return mb_decode_numericentity(json_encode($arr), array(0x80, 0xffff, 0, 0xffff), 'UTF-8');
 
+    }
+
+    public function getLastResponse()
+    {
+        return new MailfireResponse($this->lastCurlResult);
     }
 }

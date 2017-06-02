@@ -159,6 +159,33 @@ $mf->webpush->unsubscribeByUser($user);
 $mf->webpush->subscribeByUser($user);
 ```
 
+## Send custom user fields
+```php
+$data = [
+    'field1' => 42,
+    'field2' => time(),
+];
+$result = $mf->user->setUserFieldByEmailAndProjectId('vlockman@marvin.com', 1, $data);
+// $result is a boolean status
+```
+
+## Get response (if $result === false)
+```php
+$response = $mf->request->getLastResponse()->getData();
+
+//array(3) {
+//  'errorCode' =>
+//  int(409)
+//  'message' =>
+//  string(16) "Validation error"
+//  'errors' =>
+//  array(1) {
+//    'field_name' =>
+//    string(29) "Can't find user field: field2"
+//  }
+//}
+```
+
 ## Error handling
 By default any error messages (except InvalidArgumentException in Mailfire constructor) collects in error_log.
 If you want the component throws exceptions just change handler mode:

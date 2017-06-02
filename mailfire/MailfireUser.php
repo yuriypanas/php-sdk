@@ -54,4 +54,21 @@ class MailfireUser extends MailfireDi
     {
         return self::PLATFORM_IOS;
     }
+
+    /**
+     * Set custom user fields
+     *
+     * @param string $email
+     * @param int $projectId
+     * @param array $data ['fieldName' => 'fieldValue']
+     * @return bool
+     */
+    public function setUserFieldByEmailAndProjectId($email, $projectId, array $data)
+    {
+        $resource = strtr('user/fields/project/:projectId/email/:email', [
+            ':projectId' => $projectId,
+            ':email' => $email,
+        ]);
+        return $this->request->update($resource, $data);
+    }
 }

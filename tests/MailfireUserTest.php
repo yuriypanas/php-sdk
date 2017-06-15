@@ -89,4 +89,29 @@ class MailfireUserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(MailfireUser::PLATFORM_MOBILE, $user->getPlatformMobile());
         $this->assertEquals(MailfireUser::PLATFORM_UNKNOWN, $user->getPlatformUnknown());
     }
+
+    public function testShouldCheckSetUserFieldByEmailAndProjectId()
+    {
+        $predefinedResult = true;
+        $projectId = 42;
+        $email = 'email@example.com';
+        $data = ['field1' => 174, 'ctime' => time()];
+
+
+        $request = $this->getMockBuilder('MailfireRequest')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $request->expects($this->once())
+            ->method('update')
+            ->with('user/fields/project/' . $projectId . '/email/' . $email, $data)
+            ->will($this->returnValue($predefinedResult));
+
+        $clientId = 123;
+        $clientKey = 'a1s2d3f4g5h6j7k8l';
+        $mf = new Mailfire($clientId, $clientKey);
+        $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
+        $mf->request = $request;
+        $result = $mf->user->setUserFieldByEmailAndProjectId('email@example.com', $projectId, $data);
+        $this->assertTrue($result);
+    }
 }

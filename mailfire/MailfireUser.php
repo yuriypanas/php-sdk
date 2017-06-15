@@ -63,9 +63,9 @@ class MailfireUser extends MailfireDi
      * @param array $data ['fieldName' => 'fieldValue']
      * @return bool
      */
-    public function setUserFieldByEmailAndProjectId($email, $projectId, array $data)
+    public function setUserFieldsByEmailAndProjectId($email, $projectId, array $data)
     {
-        $resource = strtr('user/fields/project/:projectId/email/:email', [
+        $resource = strtr('user/project/:projectId/email/:email', [
             ':projectId' => $projectId,
             ':email' => $email,
         ]);

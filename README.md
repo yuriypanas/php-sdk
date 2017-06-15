@@ -161,12 +161,54 @@ $mf->webpush->subscribeByUser($user);
 
 ## Send custom user fields
 ```php
-$data = [
-    'field1' => 42,
-    'field2' => time(),
+$fields = [
+    'list_id' => 1,
+    'name' => 'John Dou',
+    'language' => 'es', //ISO 639-1
+    'country' => 'esp', //ISO 3166-1 alpha-3 or ISO 3166-1 alpha-2
+    'platform_id' => $mf->user->getPlatformDesktop(),
+    'gender' => 'm', //m or f
+    'status' => 0, //int
+    'vip' => 1, //int
+    'ak' => 'FFZxYfCfGgNDvmZRqnELYqU7',//Auth key
+    'age' => 21, //int
+    'photo' => 'http://moheban-ahlebeit.com/images/Face-Wallpaper/Face-Wallpaper-26.jpg',//image url
+    'partner_id' => 1, //int
+    //your own custom fields may be here
+    'field1' => 542, //int
 ];
-$result = $mf->user->setUserFieldByEmailAndProjectId('vlockman@marvin.com', 1, $data);
+$result = $mf->user->setUserFieldsByEmailAndProjectId('ercling@yandex.ru', 2, $fields);
 // $result is a boolean status
+```
+
+Attempt to send incorrect data
+```php
+$mf = new \Mailfire(3,'GH3ir1ZDMjRkNzg4MzgzE3MjU');
+$fields = [
+    'language' => 'ua',
+    'gender' => 'male',
+    'vip' => 'yes',
+];
+$result = $mf->user->setUserFieldsByEmailAndProjectId('ercling@yandex.ru', 2, $fields);
+if (!$result){
+    var_dump($mf->request->getLastResponse()->getData());
+}
+
+//array(3) {
+//  'errorCode' =>
+//  int(409)
+//  'message' =>
+//  string(16) "Validation error"
+//  'errors' =>
+//  array(3) {
+//    'language' =>
+//    string(45) "Field language is not valid language code: ua"
+//    'gender' =>
+//    string(41) "Field gender must be a part of list: m, f"
+//    'vip' =>
+//    string(44) "Field vip does not match the required format"
+//  }
+//}
 ```
 
 ## Get response (if $result === false)

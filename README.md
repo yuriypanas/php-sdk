@@ -159,20 +159,20 @@ $mf->webpush->unsubscribeByUser($user);
 $mf->webpush->subscribeByUser($user);
 ```
 
-## Send custom user fields
+## Create and update user data
 ```php
 $fields = [
-    'list_id' => 1,
     'name' => 'John Dou',
+    'gender' => 'm', //m or f
+    'age' => 21, //int
+    'photo' => 'http://moheban-ahlebeit.com/images/Face-Wallpaper/Face-Wallpaper-26.jpg',//image url
+    'ak' => 'FFZxYfCfGgNDvmZRqnELYqU7',//Auth key
+    'vip' => 1, //int
     'language' => 'es', //ISO 639-1
     'country' => 'esp', //ISO 3166-1 alpha-3 or ISO 3166-1 alpha-2
     'platform_id' => $mf->user->getPlatformDesktop(),
-    'gender' => 'm', //m or f
+    'list_id' => 1,
     'status' => 0, //int
-    'vip' => 1, //int
-    'ak' => 'FFZxYfCfGgNDvmZRqnELYqU7',//Auth key
-    'age' => 21, //int
-    'photo' => 'http://moheban-ahlebeit.com/images/Face-Wallpaper/Face-Wallpaper-26.jpg',//image url
     'partner_id' => 1, //int
     //your own custom fields may be here
     'field1' => 542, //int

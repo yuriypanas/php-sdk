@@ -174,8 +174,12 @@ $fields = [
     'list_id' => 1,
     'status' => 0, //int
     'partner_id' => 1, //int
-    //your own custom fields may be here
+
+    // Your own custom fields may be here
+    // allowed only int values
     'field1' => 542, //int
+    'sessions_count' => 22, //int
+    'session_last' => 1498137772, //unix timestamp
 ];
 $result = $mf->user->setUserFieldsByEmailAndProjectId('ercling@yandex.ru', 2, $fields);
 // $result is a boolean status

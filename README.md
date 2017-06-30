@@ -142,11 +142,12 @@ $mf->unsubTypes->removeAll(12); //subscribe user for all types
 $user = $mf->user->getByEmail('someone@example.com', 2);
 //webpush data
 $title = 'Webpush title';
+$text = 'My awesome text';
 $url = 'https://myproject.com/show/42';
 $iconUrl = 'https://static.myproject.com/6hgf5ewwfoj6';
 $typeId = 6;
 //send
-$mf->webpush->sendByUser($user, $title, $url, $iconUrl, $typeId);
+$mf->webpush->sendByUser($user, $title, $text, $url, $iconUrl, $typeId);
 ```
 
 ## Unsubscribe/Subscribe user for push notifications

@@ -69,7 +69,7 @@ class MailfireWebPush extends MailfireDi
      * @param array $meta
      * @return bool
      */
-    public function sendByUser($user, $title, $url, $iconUrl, $typeId, $meta = [])
+    public function sendByUser($user, $title, $text, $url, $iconUrl, $typeId, $meta = [], $imageUrl = null)
     {
         $pushUser = $this->getPushUserByUser($user);
         if (!$pushUser || !$pushUser['id']) {
@@ -84,6 +84,8 @@ class MailfireWebPush extends MailfireDi
             'icon' => $iconUrl,
             'type_id' => $typeId,
             'meta' => $meta,
+            'text' => $text,
+            'image_url' => $imageUrl,
         ];
 
         $result = $this->request->create('webpush/send', $webpushMessage);
@@ -100,7 +102,7 @@ class MailfireWebPush extends MailfireDi
      * @param array $meta
      * @param array $webpushMessage
      */
-    public function sendByProjectIdAndHash($projectId, $hash,  $title, $url, $iconUrl, $typeId, $meta = [])
+    public function sendByProjectIdAndHash($projectId, $hash,  $title, $text, $url, $iconUrl, $typeId, $meta = [], $imageUrl = null)
     {
         $pushUser = $this->getPushUserByProjectIdAndHash($projectId, $hash);
         if (!$pushUser || !$pushUser['id']) {
@@ -115,6 +117,8 @@ class MailfireWebPush extends MailfireDi
             'icon' => $iconUrl,
             'type_id' => $typeId,
             'meta' => $meta,
+            'text' => $text,
+            'image_url' => $imageUrl,
         ];
 
         $result = $this->request->create('webpush/send', $webpushMessage);

@@ -153,4 +153,42 @@ class MailfireWebPush extends MailfireDi
         $result = $this->request->receive('webpush/project/get/' . $projectId . '/hash/' . $hash);
         return !empty($result['result']) ? $result['result'] : false;
     }
+
+    /**
+     * @param array $user
+     * @param $url
+     * @param $publicKey
+     * @param $authToken
+     * @return bool|int
+     */
+    public function createPushUser(array $user, $url, $publicKey, $authToken)
+    {
+        if (!$user) {
+            $this->errorHandler->handle(new Exception('User was not found.'));
+            return false;
+        }
+        if (!isset($user['id']) || !$user['id']) {
+            $this->errorHandler->handle(new Exception('User id must be set.'));
+            return false;
+        }
+        if (!isset($user['project_id']) || !$user['project_id']) {
+            $this->errorHandler->handle(new Exception('Project id must be set.'));
+            return false;
+        }
+
+        $userId = $user['id'];
+        $projectId = $user['project_id'];
+
+        $sendData = array(
+            'user_id' => $userId,
+            'meta' => array(
+                'url' => $url,
+                'public_key' => $publicKey,
+                'auth_token' => $authToken,
+            ),
+        );
+
+        $result = $this->request->create('webpush/project/' . $projectId, $sendData);
+        return !empty($result['push_user_id']) ? $result['push_user_id'] : false;
+    }
 }

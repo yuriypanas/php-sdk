@@ -56,7 +56,7 @@ class MailfireUser extends MailfireDi
     }
 
     /**
-     * Set custom user fields
+     * Set custom user fields by user email and project ID
      *
      * @param string $email
      * @param int $projectId
@@ -65,10 +65,65 @@ class MailfireUser extends MailfireDi
      */
     public function setUserFieldsByEmailAndProjectId($email, $projectId, array $data)
     {
-        $resource = strtr('user/project/:projectId/email/:email', [
+        $resource = strtr('userfields/project/:projectId/email/:email', [
             ':projectId' => $projectId,
             ':email' => $email,
         ]);
         return $this->request->update($resource, $data);
+    }
+
+    /**
+     * Set custom user fields by user
+     * 
+     * @param array $user
+     * @param array $data ['fieldName' => 'fieldValue']
+     * @return bool
+     */
+    public function setUserFieldsByUser(array $user, array $data)
+    {
+        $user = $this->resolve($user);
+        if (!$user || !$user['id']) {
+            return false;
+        }
+        
+        $resource = strtr('userfields/user/:userId', [
+            ':userId' => $user['id'],
+        ]);
+        return $this->request->update($resource, $data);
+    }
+
+    /**
+     * Get custom user fields by user email and project ID
+     * 
+     * @param string $email
+     * @param int $projectId
+     * @return bool
+     */
+    public function getUserFieldsByEmailAndProjectId($email, $projectId)
+    {
+        $resource = strtr('userfields/project/:projectId/email/:email', [
+            ':projectId' => $projectId,
+            ':email' => $email,
+        ]);
+        return $this->request->receive($resource);
+    }
+
+    /**
+     * Get custom user fields by user
+     * 
+     * @param array $user
+     * @return bool
+     */
+    public function getUserFieldsByUser(array $user)
+    {
+        $user = $this->resolve($user);
+        if (!$user || !$user['id']) {
+            return false;
+        }
+        
+        $resource = strtr('userfields/user/:userId', [
+            ':userId' => $user['id'],
+        ]);
+        return $this->request->receive($resource);
     }
 }

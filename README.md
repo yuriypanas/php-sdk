@@ -182,7 +182,19 @@ $fields = [
     'sessions_count' => 22, //int
     'session_last' => 1498137772, //unix timestamp
 ];
+```
+By email and project ID
+
+```php
 $result = $mf->user->setUserFieldsByEmailAndProjectId('ercling@yandex.ru', 2, $fields);
+// $result is a boolean status
+```
+
+By user
+
+```php
+$user = $mf->user->getById(892396028);
+$result = $mf->user->setUserFieldsByUser($user, $fields);
 // $result is a boolean status
 ```
 
@@ -214,6 +226,47 @@ if (!$result){
 //    string(44) "Field vip does not match the required format"
 //  }
 //}
+```
+
+## Get user custom fields
+
+By email and project ID
+
+```php
+$result = $mf->user->getUserFieldsByEmailAndProjectId('ercling@yandex.ru', 1);
+/*
+Returns [
+    'user' => [
+        'id' => 892396028,
+        'project_id' => 1,
+         ...
+    ],
+    'custom_fields' => [
+        'sessions_count' => 22,
+         ...
+    ],
+]
+*/
+```
+
+By user
+
+```php
+$user = $mf->user->getById(892396028);
+$result = $mf->user->getUserFieldsByUser($user);
+/*
+Returns [
+    'user' => [
+        'id' => 892396028,
+        'project_id' => 1,
+         ...
+    ],
+    'custom_fields' => [
+        'sessions_count' => 22,
+         ...
+    ],
+]
+*/
 ```
 
 ## Get response (if $result === false)

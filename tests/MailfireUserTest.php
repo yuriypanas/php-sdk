@@ -90,7 +90,7 @@ class MailfireUserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(MailfireUser::PLATFORM_UNKNOWN, $user->getPlatformUnknown());
     }
 
-    public function testShouldCheckSetUserFieldByEmailAndProjectId()
+    public function testShouldCheckSetUserFieldsByEmailAndProjectId()
     {
         $predefinedResult = true;
         $projectId = 42;
@@ -103,7 +103,7 @@ class MailfireUserTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $request->expects($this->once())
             ->method('update')
-            ->with('user/fields/project/' . $projectId . '/email/' . $email, $data)
+            ->with('userfields/project/' . $projectId . '/emailhash/' . base64_encode($email), $data)
             ->will($this->returnValue($predefinedResult));
 
         $clientId = 123;
@@ -111,7 +111,7 @@ class MailfireUserTest extends PHPUnit_Framework_TestCase
         $mf = new Mailfire($clientId, $clientKey);
         $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
         $mf->request = $request;
-        $result = $mf->user->setUserFieldByEmailAndProjectId('email@example.com', $projectId, $data);
+        $result = $mf->user->setUserFieldsByEmailAndProjectId('email@example.com', $projectId, $data);
         $this->assertTrue($result);
     }
 }

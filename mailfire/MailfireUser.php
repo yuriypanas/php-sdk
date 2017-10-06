@@ -65,9 +65,9 @@ class MailfireUser extends MailfireDi
      */
     public function setUserFieldsByEmailAndProjectId($email, $projectId, array $data)
     {
-        $resource = strtr('userfields/project/:projectId/email/:email', [
-            ':projectId' => $projectId,
-            ':email' => $email,
+        $resource = strtr('userfields/project/:projectId/emailhash/:emailHash', [
+            ':projectId' => (int)$projectId,
+            ':emailHash' => base64_encode($email)
         ]);
         return $this->request->update($resource, $data);
     }

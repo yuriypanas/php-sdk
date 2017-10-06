@@ -74,7 +74,7 @@ class MailfireRequest extends MailfireDi
      */
     private function send($resource, $method, $data = array())
     {
-        $resource = strtolower($resource);
+        $resource = $resource;
         $method = strtoupper($method);
         $uri = self::API_BASE . $resource;
 

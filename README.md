@@ -39,6 +39,8 @@ $user = [ // User info, if you know
     'platform_id' => $mf->user->getPlatformDesktop(),
     'vip' => 0,
     'photo' => 'http://example.com/somephotourl.jpg',
+    'channel_id' => 42,
+    'subchannel_id' => 298,
 ];
 
 $data = [ // Data for letter

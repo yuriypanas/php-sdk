@@ -7,6 +7,8 @@
  * @property MailfireUser user
  * @property MailfireRequest request
  * @property MailfireErrorHandler errorHandler
+ * @property int|string clientId
+ * @property int|string clientKey
  *
  */
 class MailfireDi

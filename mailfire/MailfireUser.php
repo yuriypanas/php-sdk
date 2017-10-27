@@ -122,8 +122,36 @@ class MailfireUser extends MailfireDi
         }
         
         $resource = strtr('userfields/user/:userId', [
-            ':userId' => $user['id'],
+            ':userId' => $user['id']
         ]);
         return $this->request->receive($resource);
+    }
+
+    public function setOnlineByEmailAndProjectId($email, $projectId, \DateTime $dateTime)
+    {
+        $data = [
+            'timestamp' => $dateTime->format('U')
+        ];
+        $resource = strtr('users/project/:projectId/email/:emailHash/online',[
+            ':emailHash' => base64_encode($email),
+            ':projectId' => $projectId,
+        ]);
+
+        return $this->request->sendToApi2($resource, 'PUT', $data);
+    }
+
+    public function setOnlineByUser(array $user, \DateTime $dateTime)
+    {
+        $user = $this->resolve($user);
+        if (!$user || !$user['id']) {
+            return false;
+        }
+
+        $data = [
+            'timestamp' => $dateTime->format('U')
+        ];
+        $resource = 'users/' . $user['id'] . '/online';
+
+        return $this->request->sendToApi2($resource, 'PUT', $data);
     }
 }

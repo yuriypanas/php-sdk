@@ -3,6 +3,7 @@
 class MailfireRequest extends MailfireDi
 {
     const API_BASE = 'https://api.mailfire.io/v1/';
+    const API2_BASE = 'https://api2.mailfire.io/';
 
     private $curlRequest = null;
     private $lastCurlResult = null;
@@ -66,15 +67,23 @@ class MailfireRequest extends MailfireDi
     }
 
     /**
+     * @return MailfireResponse last request result
+     */
+    public function getLastResponse()
+    {
+        return new MailfireResponse($this->lastCurlResult);
+    }
+
+    /**
      * @param string $resource
      * @param string $method
      * @param array $data
+     * @param string $apiBase
      * @return bool
      * @throws Exception
      */
     private function send($resource, $method, $data = array())
     {
-        $resource = $resource;
         $method = strtoupper($method);
         $uri = self::API_BASE . $resource;
 
@@ -125,6 +134,7 @@ class MailfireRequest extends MailfireDi
         $this->curlRequest->setOption(CURLOPT_HTTPHEADER, $headers);
         $this->curlRequest->setOption(CURLOPT_RETURNTRANSFER, 1);
         $this->curlRequest->setOption(CURLOPT_CUSTOMREQUEST, $method);
+
         $result = $this->curlRequest->execute();
         $code = $this->curlRequest->getInfo(CURLINFO_HTTP_CODE);
 
@@ -186,8 +196,46 @@ class MailfireRequest extends MailfireDi
 
     }
 
-    public function getLastResponse()
+    public function sendToApi2($resource, $method, $data = array())
     {
-        return new MailfireResponse($this->lastCurlResult);
+        $uri = self::API2_BASE . $resource;
+
+        $headers = $this->getApi2Headers();
+
+        $result = $this->sendCurl($uri, $method, $data, $headers);
+        $this->lastCurlResult = $result;
+        if (substr($result['code'], 0, 1) != 2) { //2xx
+            $debugData = array(
+                'uri' => $uri,
+                'method' => $method,
+                'data' => $data,
+                'headers' => $headers
+            );
+            $exception = new Exception('Request failed: ' . json_encode($result) .
+                ' Request data: ' . json_encode($debugData));
+            $this->errorHandler->handle($exception);
+            return false;
+        }
+        $result = json_decode($result['result'], true);
+        if (!$result) {
+            return false;
+        }
+        if (isset($result['data'])) {
+            return $result['data'];
+        }
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    private function getApi2Headers()
+    {
+        $headers = array(
+            'Content-Type: application/json',
+            'Authorization: Basic ' . base64_encode($this->clientId . ':' . sha1($this->clientKey))
+        );
+
+        return $headers;
     }
 }

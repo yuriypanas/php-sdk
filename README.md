@@ -230,6 +230,19 @@ if (!$result){
 //}
 ```
 
+## Update user online
+
+By user
+
+```php
+$result = $mf->user->setOnlineByUser($user, new \DateTime()); //Accepted
+```
+
+By email and project ID
+```php
+$result = $mf->user->setOnlineByEmailAndProjectId('ercling@gmail.com', 1, new \DateTime());
+```
+
 ## Get user custom fields
 
 By email and project ID

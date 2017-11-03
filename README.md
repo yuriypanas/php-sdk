@@ -200,6 +200,26 @@ $result = $mf->user->setUserFieldsByUser($user, $fields);
 // $result is a boolean status
 ```
 
+## Create and update last payment data
+```php
+$lastPaymentDate = 1509617696;
+$paymentCount = 14; //optional
+```
+By email and project ID
+
+```php
+$result = $mf->user->setLastPaymentByEmailAndProjectId('ercling@yandex.ru', 2, $lastPaymentDate, $paymentCount);
+// $result is a boolean status
+```
+
+By user
+
+```php
+$user = $mf->user->getById(892396028);
+$result = $mf->user->setLastPaymentByUser($user, $lastPaymentDate, $paymentCount);
+// $result is a boolean status
+```
+
 Attempt to send incorrect data
 ```php
 $mf = new \Mailfire(3,'GH3ir1ZDMjRkNzg4MzgzE3MjU');

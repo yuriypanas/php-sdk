@@ -154,4 +154,57 @@ class MailfireUser extends MailfireDi
 
         return $this->request->sendToApi2($resource, 'PUT', $data);
     }
+
+    /**
+     * Set last payment by user email and project ID
+     *
+     * @param string $email
+     * @param int $projectId
+     * @param int $lastPaymentDate
+     * @param int|bool $paymentCount
+     * @return bool
+     */
+    public function setLastPaymentByEmailAndProjectId($email, $projectId, $lastPaymentDate, $paymentCount = false)
+    {
+        $user = $this->getByEmail($email, $projectId);
+        if (!$user || !$user['id']) {
+            return false;
+        }
+
+        $data = [
+            'last_payment_date' => $lastPaymentDate,
+            'user_id' => $user['id'],
+        ];
+        if ($paymentCount) {
+            $data['payment_count'] = $paymentCount;
+        }
+
+        return $this->request->create('lastpayment', $data);
+    }
+
+    /**
+     * Set last payment by user
+     *
+     * @param array $user
+     * @param int $lastPaymentDate
+     * @param int|bool $paymentCount
+     * @return bool
+     */
+    public function setLastPaymentByUser(array $user, $lastPaymentDate, $paymentCount = false)
+    {
+        $user = $this->resolve($user);
+        if (!$user || !$user['id']) {
+            return false;
+        }
+
+        $data = [
+            'last_payment_date' => $lastPaymentDate,
+            'user_id' => $user['id'],
+        ];
+        if ($paymentCount) {
+            $data['payment_count'] = $paymentCount;
+        }
+
+        return $this->request->create('lastpayment', $data);
+    }
 }

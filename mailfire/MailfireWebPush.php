@@ -126,6 +126,34 @@ class MailfireWebPush extends MailfireDi
     }
 
     /**
+     * @param int $projectId
+     * @param $title
+     * @param $text
+     * @param $url
+     * @param $iconUrl
+     * @param $typeId
+     * @param array $meta
+     * @param string $imageUrl
+     * @return bool
+     */
+    public function sendByProject($projectId, $title, $text, $url, $iconUrl, $typeId, $meta = [], $imageUrl = null)
+    {
+        $webpushMessage = [
+            'project_id' => $projectId,
+            'title' => $title,
+            'url' => $url,
+            'icon' => $iconUrl,
+            'type_id' => $typeId,
+            'meta' => $meta,
+            'text' => $text,
+            'image_url' => $imageUrl,
+        ];
+
+        $result = $this->request->create('webpush/send', $webpushMessage);
+        return !empty($result['result']) ? $result['result'] : false;
+    }
+
+    /**
      * @param array|int $user
      * @return bool
      */

@@ -152,6 +152,19 @@ $typeId = 6;
 $mf->webpush->sendByUser($user, $title, $text, $url, $iconUrl, $typeId);
 ```
 
+## Send push notification to all project users
+```php
+//webpush data
+$projectId = 1;
+$title = 'Webpush title';
+$text = 'My awesome text';
+$url = 'https://myproject.com/show/42';
+$iconUrl = 'https://static.myproject.com/6hgf5ewwfoj6';
+$typeId = 6;
+//send
+$mf->webpush->sendByProject($projectId, $title, $text, $url, $iconUrl, $typeId);
+```
+
 ## Unsubscribe/Subscribe user for push notifications
 ```php
 //select user
@@ -200,6 +213,26 @@ $result = $mf->user->setUserFieldsByUser($user, $fields);
 // $result is a boolean status
 ```
 
+## Create and update last payment data
+```php
+$lastPaymentDate = 1509617696;
+$paymentCount = 14; //optional
+```
+By email and project ID
+
+```php
+$result = $mf->user->setLastPaymentByEmailAndProjectId('ercling@yandex.ru', 2, $lastPaymentDate, $paymentCount);
+// $result is a boolean status
+```
+
+By user
+
+```php
+$user = $mf->user->getById(892396028);
+$result = $mf->user->setLastPaymentByUser($user, $lastPaymentDate, $paymentCount);
+// $result is a boolean status
+```
+
 Attempt to send incorrect data
 ```php
 $mf = new \Mailfire(3,'GH3ir1ZDMjRkNzg4MzgzE3MjU');
@@ -228,26 +261,6 @@ if (!$result){
 //    string(44) "Field vip does not match the required format"
 //  }
 //}
-```
-
-## Create and update last payment data
-```php
-$lastPaymentDate = 1509617696;
-$paymentCount = 14; //optional
-```
-By email and project ID
-
-```php
-$result = $mf->user->setLastPaymentByEmailAndProjectId('ercling@yandex.ru', 2, $lastPaymentDate, $paymentCount);
-// $result is a boolean status
-```
-
-By user
-
-```php
-$user = $mf->user->getById(892396028);
-$result = $mf->user->setLastPaymentByUser($user, $lastPaymentDate, $paymentCount);
-// $result is a boolean status
 ```
 
 ## Update user online

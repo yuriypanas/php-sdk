@@ -156,15 +156,16 @@ class MailfireUser extends MailfireDi
     }
 
     /**
-     * Set last payment by user email and project ID
+     * Add payment by user email and project ID
      *
-     * @param string $email
-     * @param int $projectId
-     * @param int $lastPaymentDate
-     * @param int|bool $paymentCount
+     * @param $email
+     * @param $projectId
+     * @param $startDate
+     * @param bool $expireDate
+     * @param bool $totalCount
      * @return bool
      */
-    public function setLastPaymentByEmailAndProjectId($email, $projectId, $lastPaymentDate, $paymentCount = false)
+    public function addPaymentByEmailAndProjectId($email, $projectId, $startDate, $expireDate = false, $totalCount = false)
     {
         $user = $this->getByEmail($email, $projectId);
         if (!$user || !$user['id']) {
@@ -172,25 +173,29 @@ class MailfireUser extends MailfireDi
         }
 
         $data = [
-            'last_payment_date' => $lastPaymentDate,
+            'start_date' => $startDate,
             'user_id' => $user['id'],
         ];
-        if ($paymentCount) {
-            $data['payment_count'] = $paymentCount;
+        if ($expireDate) {
+            $data['expire_date'] = $expireDate;
+        }
+        if ($totalCount) {
+            $data['total_count'] = $totalCount;
         }
 
         return $this->request->create('lastpayment', $data);
     }
 
     /**
-     * Set last payment by user
+     * Add payment by user
      *
      * @param array $user
-     * @param int $lastPaymentDate
-     * @param int|bool $paymentCount
+     * @param $startDate
+     * @param bool $expireDate
+     * @param bool $totalCount
      * @return bool
      */
-    public function setLastPaymentByUser(array $user, $lastPaymentDate, $paymentCount = false)
+    public function addPaymentByUser(array $user, $startDate, $expireDate = false, $totalCount = false)
     {
         $user = $this->resolve($user);
         if (!$user || !$user['id']) {
@@ -198,11 +203,14 @@ class MailfireUser extends MailfireDi
         }
 
         $data = [
-            'last_payment_date' => $lastPaymentDate,
+            'start_date' => $startDate,
             'user_id' => $user['id'],
         ];
-        if ($paymentCount) {
-            $data['payment_count'] = $paymentCount;
+        if ($expireDate) {
+            $data['expire_date'] = $expireDate;
+        }
+        if ($totalCount) {
+            $data['total_count'] = $totalCount;
         }
 
         return $this->request->create('lastpayment', $data);

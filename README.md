@@ -227,15 +227,16 @@ $result = $mf->user->setUserFieldsByUser($user, $fields);
 // $result is a boolean status
 ```
 
-## Create and update last payment data
+## Create and update payment data
 ```php
-$lastPaymentDate = 1509617696;
+$startDate = 1509617696;
+$expireDate = 1609617696; //optional
 $paymentCount = 14; //optional
 ```
 By email and project ID
 
 ```php
-$result = $mf->user->setLastPaymentByEmailAndProjectId('ercling@yandex.ru', 2, $lastPaymentDate, $paymentCount);
+$result = $mf->user->addPaymentByEmailAndProjectId('ercling@yandex.ru', 2, $startDate, $expireDate, $paymentCount);
 // $result is a boolean status
 ```
 
@@ -243,7 +244,7 @@ By user
 
 ```php
 $user = $mf->user->getById(892396028);
-$result = $mf->user->setLastPaymentByUser($user, $lastPaymentDate, $paymentCount);
+$result = $mf->user->addPaymentByUser($user, $startDate, $expireDate, $paymentCount);
 // $result is a boolean status
 ```
 

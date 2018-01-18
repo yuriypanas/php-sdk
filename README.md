@@ -332,6 +332,29 @@ Returns [
 */
 ```
 
+## Send goals without sdk
+
+```php
+POST https://api.mailfire.io/v1/goals
+params: {
+            'type' : 'contact',
+            'email' : 'andrey.reinwald@corp.flirchi.com', 
+            'project_id' : 30,
+            'mail_id' : 2739212714|null
+        }
+```
+
+SDK method will be available soon
+
+Request format
+
+Name | Type | Description
+-------|------|-------
+`type`|`string`| **Required.** Goal type
+`email`|`string`| **Required.** User email 
+`project_id`|`int`| **Required.** Id of your project. You can find it at https://admin.mailfire.io/account/projects 
+`mail_id`|`int`| Mail id after which the user made a goal
+
 ## Get response (if $result === false)
 ```php
 $response = $mf->request->getLastResponse()->getData();

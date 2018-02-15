@@ -46,3 +46,11 @@ $unsub = $mf->unsub->addBySettings($user);
 var_dump($unsub);
 $unsub = $mf->unsub->subscribe($user);
 var_dump($unsub);
+
+// get unsubscribe reason
+$result = $mf->unsub->getUnsubscribeReason(91,'test@exmaple.com');
+/* $result
+ array(1) {
+  'result' => string(5) "many_persistent_errors"
+}
+*/

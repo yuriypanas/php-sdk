@@ -15,7 +15,7 @@ class MailfireGoal extends MailfireDi
     public function createGoal(array $data)
     {
 
-        $resultArray = ['goals_created' => 0];
+        $resultArray = ['goals_added' => 0];
         
         foreach ($data as $dataItem) {
             $validData = $this->validateData($dataItem);
@@ -32,7 +32,7 @@ class MailfireGoal extends MailfireDi
         $sendStatus = $this->request->sendToApi2(self::GOAL_RESOURCE,"POST", $data);
 
         if ($sendStatus) {
-            $resultArray['goals_created'] = count($this->validGoals);
+            $resultArray['goals_added'] = count($this->validGoals);
             return array_merge($resultArray,$this->invalidGoals);
         }
         
@@ -51,27 +51,25 @@ class MailfireGoal extends MailfireDi
                 'min_range' => 1
             ]];
 
-        $data['email'] = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
-        if (empty($data['email'])) {
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $invalidItem['error_messages'][] = "Parameter email is invalid";
         }
 
-        $data['type'] = filter_var(trim(strtolower($data['type'])), FILTER_SANITIZE_STRING);
-        if (empty($data['type'])) {
+        if (!filter_var($data['type'], FILTER_SANITIZE_STRING)) {
             $invalidItem['error_messages'][] = "Parameter type is invalid";
         }
 
-        $data['project_id'] = filter_var($data['project_id'], FILTER_VALIDATE_INT, $filterOptions);
-        if (empty($data['project_id'])) {
+        if (!filter_var($data['project_id'], FILTER_VALIDATE_INT, $filterOptions)) {
             $invalidItem['error_messages'][] = "Parameter project_id is invalid";
         }
 
-        $data['mail_id'] = filter_var($data['mail_id'], FILTER_VALIDATE_INT, $filterOptions);
-        if (empty($data['mail_id'])) {
+        if (!filter_var($data['mail_id'], FILTER_VALIDATE_INT, $filterOptions)) {
             $invalidItem['error_messages'][] = "Parameter mail_id is invalid";
         }
 
         if(count($invalidItem['error_messages']) > 0) {
+            $invalidItem['errorCode'] = 409;
+            $invalidItem['message'] = "Validation error";
             $invalidItem['goal_data'] = implode(';',$data);
             $this->invalidGoals[] = $invalidItem;
             return false;

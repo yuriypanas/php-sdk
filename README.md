@@ -357,7 +357,7 @@ $res = $mf->goal->createGoal($data);
 
 ```
 
-## Error response
+## Success response
 
 ```php
 /*

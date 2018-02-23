@@ -47,6 +47,25 @@ var_dump($unsub);
 $unsub = $mf->unsub->subscribe($user);
 var_dump($unsub);
 
+
+// create goals
+$data = [
+    [
+        'email' => 'testmail@mail.com',
+        'type' => 'some_type',
+        'project_id' => 1,
+        'mail_id' => 1233534556,
+    ],
+    [
+        'email' => 'testmail1@mail.com',
+        'type' => 'some_type1',
+        'project_id' => 2,
+        'mail_id' => 233534556,
+    ]
+];
+
+$res = $mf->goal->createGoal($data);
+
 // get unsubscribe reason
 $result = $mf->unsub->getUnsubscribeReason(91,'test@exmaple.com');
 /* $result

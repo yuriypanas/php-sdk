@@ -332,6 +332,85 @@ Returns [
 */
 ```
 
+## Send goals using sdk
+
+```php
+$data = [
+    [
+        'email' => 'someone@example.com',
+        'type' => 'some_type',
+        'project_id' => 123,
+        'mail_id' => '123123123',
+    ],
+    [
+        'email' => 'someone1@example.com',
+        'type' => 'some_type',
+        'project_id' => 345,
+        'mail_id' => '345345345',
+    ]];
+
+$res = $mf->goal->createGoal($data);
+
+
+
+
+
+```
+
+## Success response
+
+```php
+/*
+array(1) {
+  'goals_added' => int(2)
+}
+*/
+```
+
+
+
+## Error response
+
+```php
+/*
+array(3) {
+  'goals_added' =>
+  int(0)
+  [0] =>
+  array(4) {
+    'error_messages' =>
+    array(1) {
+      [0] =>
+      string(25) "Parameter type is invalid"
+    }
+    'errorCode' =>
+    int(409)
+    'message' =>
+    string(16) "Validation error"
+    'goal_data' =>
+    string(39) "somemail@example.com;<h1>;123;123123123"
+  }
+  [1] =>
+  array(4) {
+    'error_messages' =>
+    array(1) {
+      [0] =>
+      string(26) "Parameter email is invalid"
+    }
+    'errorCode' =>
+    int(409)
+    'message' =>
+    string(16) "Validation error"
+    'goal_data' =>
+    string(46) "somem@ail1@example.com;some_type;345;345345345"
+  }
+}
+*/
+```
+
+
+
+
 ## Send goals without sdk
 
 ```php
@@ -343,8 +422,6 @@ params: {
             'mail_id' : 2739212714|null
         }
 ```
-
-SDK method will be available soon
 
 Request format
 

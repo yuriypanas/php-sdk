@@ -65,3 +65,11 @@ $data = [
 ];
 
 $res = $mf->goal->createGoal($data);
+
+// get unsubscribe reason
+$result = $mf->unsub->getUnsubscribeReason(91,'test@exmaple.com');
+/* $result
+ array(1) {
+  'result' => string(5) "many_persistent_errors"
+}
+*/

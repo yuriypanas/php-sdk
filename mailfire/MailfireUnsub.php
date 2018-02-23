@@ -61,4 +61,23 @@ class MailfireUnsub extends MailfireDi
         }
         return $this->request->receive('unsub/isunsub/' . $user['id']);
     }
+
+    public function getUnsubscribeReason($projectId, $email)
+    {
+        $user = $this->user->getByEmail($email, $projectId);
+        if (!$user || !$user['id']) {
+            return false;
+        }
+        return $this->request->receive('unsub/unsubreason/'.$user['id']);
+    }
+    
+    public function unsubByAdmin($user)
+    {
+        $user = $this->user->resolve($user);
+        if (!$user || !$user['id']) {
+            return false;
+        }
+        return $this->request->receive('unsub/admin/' . $user['id']);
+    }
+
 }

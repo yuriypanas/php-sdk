@@ -138,6 +138,25 @@ $mf->unsubTypes->removeAll(12); //subscribe user for all types
 
 ```
 
+## Unsubscribe by admin
+
+```php
+$projectId = 123;
+$user = $mf->user->getByEmail('test@example.com', $projectId);
+$result = $mf->unsub->unsubByAdmin($user);
+
+/*
+success result
+array(1) {
+  'unsub' => bool(true)
+}
+error result
+array(1) {
+  'unsub' => bool(false)
+}
+*/
+```
+
 ## Check is unsubscribed
 By user:
 ```php
@@ -151,6 +170,16 @@ $projectId = 1;
 $unsub = $mf->unsub->isUnsubByEmailAndProjectId('test@example.com', $projectId); // Returns false(if not unsubscribed) or unsub data
 ```
 
+## Get unsubscribe reason
+
+```php
+$projectId = 123;
+$result = $mf->unsub->getUnsubscribeReason($projectId,'test@example.com');
+success result
+array(1) {
+  'result' =>  string(7) "invalid"
+}
+```
 
 ## Send push notification
 ```php

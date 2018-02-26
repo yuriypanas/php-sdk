@@ -142,15 +142,14 @@ $mf->unsubTypes->removeAll(12); //subscribe user for all types
 
 ```php
 $projectId = 123;
-$user = $mf->user->getByEmail('test@example.com', $projectId);
-$result = $mf->unsub->unsubByAdmin($user);
+$result = $mf->unsub->unsubByAdmin('test@example.com',$projectId);
 
 /*
 success result
 array(1) {
   'unsub' => bool(true)
 }
-error result
+error result (already unsubscribed)
 array(1) {
   'unsub' => bool(false)
 }

@@ -62,7 +62,7 @@ class MailfireUnsub extends MailfireDi
         return $this->request->receive('unsub/isunsub/' . $user['id']);
     }
 
-    public function getUnsubscribeReason($projectId, $email)
+    public function getUnsubscribeReason($email, $projectId)
     {
         $user = $this->user->getByEmail($email, $projectId);
         if (!$user || !$user['id']) {

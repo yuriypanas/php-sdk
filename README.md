@@ -173,11 +173,24 @@ $unsub = $mf->unsub->isUnsubByEmailAndProjectId('test@example.com', $projectId);
 
 ```php
 $projectId = 123;
-$result = $mf->unsub->getUnsubscribeReason($projectId,'test@example.com');
-success result
+$result = $mf->unsub->getUnsubscribeReason('test@example.com',$projectId);
+
+//user does not unsubscribed
 array(1) {
-  'result' =>  string(7) "invalid"
+  'result' => bool(false)
 }
+
+//reason for the unsubscription is unknown
+array(1) {
+  'result' => string(7) "Unknown"
+}
+
+//success result
+array(1) {
+  'result' => string(5) "admin"
+}
+
+
 ```
 
 ## Send push notification

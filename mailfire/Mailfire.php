@@ -28,6 +28,7 @@ class Mailfire
         $this->unsub = new MailfireUnsub($this);
         $this->unsubTypes = new MailfireUnsubTypes($this);
         $this->webpush = new MailfireWebPush($this);
+        $this->goal = new MailfireGoal($this);
     }
     
 }

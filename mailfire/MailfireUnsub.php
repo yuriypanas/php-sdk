@@ -64,11 +64,16 @@ class MailfireUnsub extends MailfireDi
 
     public function unsubByAdmin($email, $projectId)
     {
-        $user = $this->user->getByEmail($email, $projectId);
-        if (!$user || !$user['id']) {
-            return false;
+        if (!$email || !$projectId) {
+            return ['unsub' => false];
         }
-        return $this->request->create('unsub/admin/' . $user['id']);
+
+        $result = $this->request->create('unsub/admin/' . $projectId . '/email/' . base64_encode($email));
+        if ($result == false) {
+            return ['unsub' => false];
+        }
+        return $result;
+
     }
 
 }

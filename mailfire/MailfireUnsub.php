@@ -62,6 +62,20 @@ class MailfireUnsub extends MailfireDi
         return $this->request->receive('unsub/isunsub/' . $user['id']);
     }
 
+    public function unsubByAdmin($email, $projectId)
+    {
+        if (!$email || !$projectId) {
+            return ['unsub' => false];
+        }
+
+        $result = $this->request->create('unsub/admin/' . $projectId . '/email/' . base64_encode($email));
+        if ($result == false) {
+            return ['unsub' => false];
+        }
+        return $result;
+
+    }
+  
     public function getUnsubscribeReason($email, $projectId)
     {
         $user = $this->user->getByEmail($email, $projectId);
@@ -69,15 +83,6 @@ class MailfireUnsub extends MailfireDi
             return false;
         }
         return $this->request->receive('unsub/unsubreason/'.$user['id']);
-    }
-    
-    public function unsubByAdmin($user)
-    {
-        $user = $this->user->resolve($user);
-        if (!$user || !$user['id']) {
-            return false;
-        }
-        return $this->request->create('unsub/admin/' . $user['id']);
     }
 
 }

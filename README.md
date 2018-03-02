@@ -71,6 +71,27 @@ $result = $mf->email->check('Test@Example.com');
 ) */
 ```
 
+## Validate email
+```php
+
+$projectId = 1;
+$email = 'test@example.com';
+$typeId = 1;
+
+$result = $mf->email->validate($projectId, $email, $typeId);
+/* Returned array(
+  'code' => ...,
+  'text' => ...,
+) */
+
+CODES:
+
+EMAIL_VALIDATION_STATUS_PASSED = 1;
+EMAIL_VALIDATION_STATUS_INVALID = 2;
+EMAIL_VALIDATION_STATUS_SERVER_ERROR = 3;
+
+```
+
 ## User info
 ```php
 $projectId = 1;

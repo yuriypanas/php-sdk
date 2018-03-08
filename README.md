@@ -123,6 +123,15 @@ $unsub = $mf->unsub->addBySettings($user);
 var_dump($unsub);
 ```
 
+## Subscribe back
+```php
+$projectId = 1;
+$user = $mf->user->getByEmail('test@example.com', $projectId);
+// Make DELETE to /unsub/USER_ID
+$unsub = $mf->unsub->subscribe($user);
+var_dump($unsub);
+```
+
 ## Unsubscribe from types
 ```php
 $projectId = 1;

@@ -63,7 +63,7 @@ class MailfireGoal extends MailfireDi
             $invalidItem['error_messages'][] = "Parameter project_id is invalid";
         }
 
-        if (!filter_var($data['mail_id'], FILTER_VALIDATE_INT, $filterOptions)) {
+        if (isset($data['mail_id']) && !filter_var($data['mail_id'], FILTER_VALIDATE_INT, $filterOptions)) {
             $invalidItem['error_messages'][] = "Parameter mail_id is invalid";
         }
 

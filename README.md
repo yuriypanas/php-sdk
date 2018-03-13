@@ -71,6 +71,27 @@ $result = $mf->email->check('Test@Example.com');
 ) */
 ```
 
+## Validate email
+```php
+
+$projectId = 1;
+$email = 'test@example.com';
+$typeId = 1;
+
+$result = $mf->email->validate($projectId, $email, $typeId);
+/* Returned array(
+  'code' => ...,
+  'text' => ...,
+) */
+
+CODES:
+
+EMAIL_VALIDATION_STATUS_PASSED = 1;
+EMAIL_VALIDATION_STATUS_INVALID = 2;
+EMAIL_VALIDATION_STATUS_SERVER_ERROR = 3;
+
+```
+
 ## User info
 ```php
 $projectId = 1;
@@ -99,6 +120,15 @@ $projectId = 1;
 $user = $mf->user->getByEmail('test@example.com', $projectId);
 // Make POST to /unsub/USER_ID/source/9
 $unsub = $mf->unsub->addBySettings($user);
+var_dump($unsub);
+```
+
+## Subscribe back
+```php
+$projectId = 1;
+$user = $mf->user->getByEmail('test@example.com', $projectId);
+// Make DELETE to /unsub/USER_ID
+$unsub = $mf->unsub->subscribe($user);
 var_dump($unsub);
 ```
 
@@ -138,6 +168,24 @@ $mf->unsubTypes->removeAll(12); //subscribe user for all types
 
 ```
 
+## Unsubscribe by admin
+
+```php
+$projectId = 123;
+$result = $mf->unsub->unsubByAdmin('test@example.com',$projectId);
+
+/*
+success result
+array(1) {
+  'unsub' => bool(true)
+}
+error result (already unsubscribed)
+array(1) {
+  'unsub' => bool(false)
+}
+*/
+```
+
 ## Check is unsubscribed
 By user:
 ```php
@@ -151,6 +199,29 @@ $projectId = 1;
 $unsub = $mf->unsub->isUnsubByEmailAndProjectId('test@example.com', $projectId); // Returns false(if not unsubscribed) or unsub data
 ```
 
+## Get unsubscribe reason
+
+```php
+$projectId = 123;
+$result = $mf->unsub->getUnsubscribeReason('test@example.com',$projectId);
+
+//user does not unsubscribed
+array(1) {
+  'result' => bool(false)
+}
+
+//reason for the unsubscription is unknown
+array(1) {
+  'result' => string(7) "Unknown"
+}
+
+//success result
+array(1) {
+  'result' => string(5) "admin"
+}
+
+
+```
 
 ## Send push notification
 ```php

@@ -8,4 +8,11 @@ class MailfireEmail extends MailfireDi
     {
         return $this->request->create(self::CHECK_EMAIL_RESOURCE, array('email' => $email));
     }
+
+    public function validate($projectId, $email, $typeId)
+    {
+        return $this->request->sendToApi2('emails/validate', 'POST', [
+            'project' => $projectId, 'email' => $email, 'type' => $typeId
+        ]);
+    }
 }

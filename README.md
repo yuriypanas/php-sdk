@@ -5,32 +5,42 @@
 
 PHP SDK for https://mailfire.io
 
-## Install
-by composer from https://packagist.org/packages/mailfire/php-sdk
+## Installing
+via Composer https://getcomposer.org/download
 ```sh
 composer require mailfire/php-sdk
 ```
-or just include autoload:
+or download lib & include files in dir:
 ```php
 require_once 'autoloader.php';
 ```
 
-# Using
+# Quick start: sending email
 ```php
-// Init Mailfire SDK object
 $clientId = 123;
 $clientHash = 'a1s2d3f4g5h6j7k8l';
+
+// Init main object with access credentials
 $mf = new Mailfire($clientId, $clientHash);
-```
 
-## Send email
-```php
-$typeId = 1; // letter id
+// You can enable Exceptions for sdk fails
+// $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
+
+// Required params for letter
+$typeId = 1; // letter id (aka type_id)
 $categoryId = $mf->push->getCategorySystem(); // system or trigger
-$projectId = 1;
-$email = 'test@example.com';
+$projectId = 1; // in your admin panel
+$email = 'test@example.com'; // for matching user
 
-$user = [ // User info, if you know
+// Variables for letter
+$data = [ // Data for letter
+    'some' => 'hi',
+    'letter' => 'John',
+    'variables' => '!',
+];
+
+// User info, that will be saved [not required]
+$user = [
     'name' => 'John',
     'age' => '22',
     'gender' => 'm',
@@ -42,20 +52,19 @@ $user = [ // User info, if you know
     'channel_id' => 42,
     'subchannel_id' => 298,
 ];
-
-$data = [ // Data for letter
-    'some' => 'hi',
-    'letter' => 'John',
-    'variables' => '!',
+// Your data, that will be sent with our webhooks
+$meta = [
+    'tracking_id' => 72348234,
 ];
 
-$meta = []; // Your additional data
-
-// Make POST to /push/system or /push/trigger with json http://pastebin.com/raw/Dy3VeZpB
+// Sending
 $response = $mf->push->send($typeId, $categoryId, $projectId, $email, $user, $data, $meta);
-var_dump($response);
-```
+// it will make POST to /push/system or /push/trigger with json http://pastebin.com/raw/Dy3VeZpB
 
+var_dump($response);
+// 
+```
+# Other API methods
 ## Check email
 ```php
 // Make POST /email/check with json {"email":"Test@Example.com"}

@@ -51,6 +51,7 @@ $user = [
     'photo' => 'http://example.com/somephotourl.jpg',
     'channel_id' => 42,
     'subchannel_id' => 298,
+    'client_user_id' => '123xyz'
 ];
 // Your data, that will be sent with our webhooks
 $meta = [

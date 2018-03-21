@@ -529,6 +529,18 @@ $response = $mf->request->getLastResponse()->getData();
 //}
 ```
 
+## Recommendation ( add request )
+If the recommendation for this user already exists, the entry will be overwritten
+```php
+curl -X POST \
+  https://api2.mailfire.io/recommendation/add \
+  -H 'Authorization: Basic TA6NDdjZjNmZWDE4NmU4YWYzMQ==' \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -d '[{"email":"email@example.com","cluster_id":3,"project_id":100,"products":[{"image":"http:\/\/s5.tinypic.com\/iylxjm_th.jpg","url":"http:\/\/iphone.com\/iphone","name":"sgs9","category":["mobile","smartphone"]},{"image":"http:\/\/s5.tinypic.com\/iylxjm_th.jpg","url":"http:\/\/iphone.com\/iphone","name":"iphone","category":["mobile","smartphone"]},{"image":"http:\/\/s5.tinypic.com\/iylxjm_th.jpg","url":"http:\/\/bmw.com\/bmw","name":"bmw","category":["car","auto"]}]},{"email":"email@example.com","project_id":18,"cluster_id":2,"products":[{"image":"http:\/\/s5.tinypic.com\/iylxjm_th.jpg","url":"http:\/\/iphone.com\/iphone","name":"sgs9","category":["mobile","smartphone"]}]}]'
+```
+
+
 ## Error handling
 By default any error messages (except InvalidArgumentException in Mailfire constructor) collects in error_log.
 If you want the component throws exceptions just change handler mode:

@@ -29,6 +29,8 @@ class Mailfire
         $this->unsubTypes = new MailfireUnsubTypes($this);
         $this->webpush = new MailfireWebPush($this);
         $this->goal = new MailfireGoal($this);
+        $this->appPush = new MailfireAppPush($this);
+        $this->content = new MailfireContent($this);
     }
     
 }

@@ -512,6 +512,61 @@ Name | Type | Description
 `project_id`|`int`| **Required.** Id of your project. You can find it at https://admin.mailfire.io/account/projects 
 `mail_id`|`int`| Mail id after which the user made a goal
 
+# Application pushes
+
+$token - application token from Firebase server
+
+$uid - unique identifier of users device
+
+Create user
+
+```php
+$result = $mf->appPush->createPushUser($project, $token, $uid, $userId = null);
+// $result is id of created user
+```
+
+Refresh token
+
+```php
+$result = $mf->appPush->refreshToken($project, $token, $uid);
+// $result is a boolean status
+```
+
+Track show
+
+```php
+$result = $mf->appPush->trackShow($project, $uid, $pushId);
+// $result is a boolean status
+```
+
+Track click
+
+```php
+$result = $mf->appPush->trackClick($project, $uid, $pushId);
+// $result is a boolean status
+```
+
+Update online
+
+```php
+$result = $mf->appPush->updateOnline($project, $uid);
+// $result is a boolean status
+```
+
+# Content
+
+$entityId - ID of entity which user watched
+
+$uid - unique identifier of users device
+
+Track show
+
+```php
+$result = $mf->content->trackShow($project, $uid, $entityId = null);
+// $result is a boolean status
+```
+
+
 ## Get response (if $result === false)
 ```php
 $response = $mf->request->getLastResponse()->getData();

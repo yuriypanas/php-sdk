@@ -31,6 +31,7 @@ class Mailfire
         $this->goal = new MailfireGoal($this);
         $this->appPush = new MailfireAppPush($this);
         $this->content = new MailfireContent($this);
+        $this->rfm = new MailfireRfm($this);
     }
     
 }

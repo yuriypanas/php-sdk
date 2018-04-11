@@ -566,6 +566,11 @@ $result = $mf->content->trackShow($project, $uid, $entityId = null);
 // $result is a boolean status
 ```
 
+# Force confirm update
+```php
+$result = $mf->user->forceConfirmByEmailAndProject($email, $projectId);
+// $result == 'Accepted'; if successful
+```
 
 ## Get response (if $result === false)
 ```php

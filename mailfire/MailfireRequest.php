@@ -9,7 +9,6 @@ class MailfireRequest extends MailfireDi
 {
     const API_BASE = 'https://api.mailfire.io/v1/';
     const API2_BASE = 'https://api2.mailfire.io/';
-    
     private $curlRequest = null;
     private $lastCurlResult = null;
 
@@ -142,7 +141,9 @@ class MailfireRequest extends MailfireDi
         $result = $this->curlRequest->execute();
         $code = $this->curlRequest->getInfo(CURLINFO_HTTP_CODE);
 
-        register_shutdown_function([$this->curlRequest, 'reset']);
+        if ($this->curlRequest->resetOptions) {
+            $this->curlRequest->reset();
+        }
 
         return array(
             'result' => $result,
@@ -242,4 +243,15 @@ class MailfireRequest extends MailfireDi
 
         return $headers;
     }
+
+    public function setOption($name, $value, $resetOptions = true)
+    {
+        $this->curlRequest->setExtraOption($name, $value, $resetOptions);
+    }
+
+    public function resetOptions()
+    {
+        $this->curlRequest->reset();
+    }
+
 }

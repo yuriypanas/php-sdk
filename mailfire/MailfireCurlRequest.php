@@ -3,6 +3,7 @@
 class MailfireCurlRequest
 {
     private $handle = null;
+    public $resetOptions = true;
 
     public function __construct($url = '')
     {
@@ -11,6 +12,12 @@ class MailfireCurlRequest
 
     public function setOption($name, $value)
     {
+        curl_setopt($this->handle, $name, $value);
+    }
+
+    public function setExtraOption($name, $value, $resetOptions = true)
+    {
+        $this->resetOptions = $resetOptions;
         curl_setopt($this->handle, $name, $value);
     }
 

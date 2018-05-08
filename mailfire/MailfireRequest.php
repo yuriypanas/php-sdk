@@ -141,10 +141,6 @@ class MailfireRequest extends MailfireDi
         $result = $this->curlRequest->execute();
         $code = $this->curlRequest->getInfo(CURLINFO_HTTP_CODE);
 
-        if ($this->curlRequest->resetOptions) {
-            $this->curlRequest->reset();
-        }
-
         return array(
             'result' => $result,
             'code' => $code
@@ -244,14 +240,19 @@ class MailfireRequest extends MailfireDi
         return $headers;
     }
 
-    public function setOption($name, $value, $resetOptions = true)
+    public function setOption($name, $value, $permanentOption = false)
     {
-        $this->curlRequest->setExtraOption($name, $value, $resetOptions);
+        $this->curlRequest->setOption($name, $value, $permanentOption);
     }
 
     public function resetOptions()
     {
         $this->curlRequest->reset();
+    }
+
+    public function resetPermanentOptions()
+    {
+        $this->curlRequest->resetPermanentOptions();
     }
 
 }

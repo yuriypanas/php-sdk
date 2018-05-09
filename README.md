@@ -597,6 +597,22 @@ $mf = new Mailfire($clientId, $clientHash);
 $mf->errorHandler->setErrorMode(MailfireErrorHandler::MODE_EXCEPTION);
 ```
 
+## Set curl options for single request
+```php
+$mf = new Mailfire($clientId, $clientHash);
+$mf->request->setOption(CURLOPT_TIMEOUT, 2);
+```
+
+## Set curl options for multiple requests (permanent)
+```php
+$mf->request->setOption(CURLOPT_TIMEOUT_MS, 2000, true);
+```
+
+## Reset permanent curl options
+```php
+$mf->request->resetPermanentOptions();
+```
+
 # HOW TO RUN THE TESTS
 Make sure you have PHPUnit installed.
 

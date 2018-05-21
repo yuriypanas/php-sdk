@@ -268,6 +268,9 @@ $user = $mf->user->getByEmail('someone@example.com', 2);
 $mf->webpush->unsubscribeByUser($user);
 //subscribe back
 $mf->webpush->subscribeByUser($user);
+//unsubscribe by push user id
+$pushUserId = 123;
+$mf->webpush->unsubscribeByPushUser($pushUserId);
 ```
 
 ## Create and update user data
